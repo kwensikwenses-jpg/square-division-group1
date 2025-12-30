@@ -1,53 +1,37 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase';
+import React from 'react';
+import Link from 'next/link';
 
-export default function NotificationBell() {
-  const [unreadCount, setUnreadCount] = useState(0);
-  const [hasNew, setHasNew] = useState(false);
+// This interface tells TypeScript exactly what "Props" the Navbar is allowed to take.
+interface NavbarProps {
+  onMenuClick: () => void;
+}
 
-  useEffect(() => {
-    // 1. Listen for new messages across the whole platform
-    const channel = supabase
-      .channel('global-notifications')
-      .on('postgres_changes', 
-        { event: 'INSERT', schema: 'public', table: 'messages' }, 
-        async (payload) => {
-          const { data: { user } } = await supabase.auth.getUser();
-          
-          // 2. Only notify if the message is NOT from the current user
-          if (payload.new.sender_id !== user?.id) {
-            setUnreadCount(prev => prev + 1);
-            setHasNew(true);
-            
-            // Optional: Play a subtle notification sound for the demo
-            const audio = new Audio('/notify.mp3');
-            audio.play().catch(() => console.log("Audio blocked by browser"));
-          }
-        }
-      )
-      .subscribe();
-
-    return () => { supabase.removeChannel(channel); };
-  }, []);
-
+export default function Navbar({ onMenuClick }: NavbarProps) {
   return (
-    <button 
-      onClick={() => { setUnreadCount(0); setHasNew(false); }}
-      className="relative p-2 hover:bg-black hover:text-white transition-all border border-black"
-    >
-      {/* Brutalist Bell Icon */}
-      <span className="text-[10px] font-black uppercase tracking-widest">Alerts</span>
-      
-      {hasNew && (
-        <span className="absolute -top-1 -right-1 flex h-4 w-4">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-4 w-4 bg-red-600 text-[8px] text-white items-center justify-center font-bold">
-            {unreadCount}
-          </span>
-        </span>
-      )}
-    </button>
+    <nav className="fixed top-0 left-0 w-full z-40 bg-[#edeae7]/80 backdrop-blur-md border-b-4 border-black px-8 py-4 flex justify-between items-center">
+      <div className="flex items-center gap-8">
+        <Link href="/" className="text-2xl font-black italic uppercase tracking-tighter">
+          KAI<span className="text-[#6082a3]">.</span>
+        </Link>
+        
+        <div className="hidden md:flex gap-6">
+          <Link href="/explore" className="text-[10px] font-black uppercase hover:text-[#6082a3] transition-colors">Explore_Grid</Link>
+          <Link href="/business/register" className="text-[10px] font-black uppercase hover:text-[#6082a3] transition-colors">Join_Ecosystem</Link>
+        </div>
+      </div>
+
+      {/* This button now correctly uses the prop you passed from LandingPage */}
+      <button 
+        onClick={onMenuClick}
+        className="flex flex-col gap-1.5 group p-2"
+        aria-label="Open Menu"
+      >
+        <div className="h-1 w-8 bg-black group-hover:bg-[#6082a3] transition-colors"></div>
+        <div className="h-1 w-8 bg-black group-hover:bg-[#6082a3] transition-colors"></div>
+        <div className="h-1 w-6 bg-black group-hover:bg-[#6082a3] transition-colors self-end"></div>
+      </button>
+    </nav>
   );
 }
