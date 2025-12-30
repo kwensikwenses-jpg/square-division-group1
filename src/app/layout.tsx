@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar"; // Ensure this path is correct based on your screenshot
+import CustomCursor from "@/components/CustomCursor"; // The interactive element for luxury feel
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KZN Partner Ecosystem",
+  title: "KZN Partner Ecosystem | THE GRID",
   description: "Connecting local businesses and customers in KwaZulu-Natal",
 };
 
@@ -26,11 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#edeae7] text-black min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#edeae7] text-black min-h-screen cursor-none`}
       >
-      
+        {/* The Custom Cursor sits at the root level to track across all pages */}
+        <CustomCursor />
         
-        {/* Main wrapper to ensure content starts below the fixed Navbar if necessary */}
         <div className="pt-0"> 
           {children}
         </div>

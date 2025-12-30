@@ -17,7 +17,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   return (
     <main className="min-h-screen bg-[#edeae7] text-black">
-      <Navbar />
+      
       <div className="flex pt-20 h-screen">
         {/* SHARED SIDEBAR */}
         <aside className="w-64 border-r border-black p-8 hidden md:flex flex-col justify-between h-full">
