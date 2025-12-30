@@ -43,12 +43,64 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 03: SYSTEM STATS */}
-      <section className="border-b-4 border-black flex flex-col md:flex-row bg-white">
-        <StatRow value="2.4k" label="Active_Nodes" bgColor="bg-white" />
-        <StatRow value="98%" label="Connectivity" bgColor="bg-[#edeae7]" />
-        <StatRow value="R12m" label="Local_Circulation" bgColor="bg-[#6082a3]" />
-      </section>
+      {/* --- KZN ECOSYSTEM STATS SECTION --- */}
+<section 
+  className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-y-2 lg:gap-2 p-16 xl:p-32 bg-[var(--color-background)]"
+  style={{ 
+    padding: 'calc(var(--spacing) * 16)', 
+    rowGap: 'calc(var(--spacing) * 2)',
+    columnGap: 'calc(var(--spacing) * 2)' 
+  } as React.CSSProperties}
+>
+  {/* BLOCK 01: GROWTH METRIC */}
+  <div className="bg-[var(--color-accent)] p-8 md:p-12 flex flex-col justify-between aspect-square border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+    <div className="flex justify-between items-start">
+      <span className="text-[10px] font-black uppercase tracking-[0.4em] bg-black text-white px-2 py-1">Node_01</span>
+      <span className="text-4xl font-black italic">↗</span>
+    </div>
+    <div>
+      <h2 className="text-7xl font-black uppercase italic leading-none tracking-tighter">35%</h2>
+      <p className="text-[10px] font-black uppercase mt-4 tracking-widest leading-tight">Projected_Monthly_Growth</p>
+    </div>
+  </div>
+
+  {/* BLOCK 02: ACTIVE PARTNERS */}
+  <div className="bg-black text-white p-8 md:p-12 flex flex-col justify-between aspect-square border-4 border-black shadow-[8px_8px_0px_0px_rgba(255,158,0,0.3)]">
+    <div className="flex justify-between items-start">
+      <span className="text-[10px] font-black uppercase tracking-[0.4em] border border-white/20 px-2 py-1">Node_02</span>
+      <div className="h-4 w-4 bg-[var(--color-accent)] rounded-full animate-pulse" />
+    </div>
+    <div>
+      <h2 className="text-7xl font-black uppercase italic leading-none tracking-tighter">150+</h2>
+      <p className="text-[10px] font-black uppercase mt-4 tracking-widest leading-tight">Verified_Business_Partners</p>
+    </div>
+  </div>
+
+  {/* BLOCK 03: REGIONAL COVERAGE */}
+  <div className="bg-white text-black p-8 md:p-12 flex flex-col justify-between aspect-square border-4 border-black">
+    <div className="flex justify-between items-start">
+      <span className="text-[10px] font-black uppercase tracking-[0.4em] opacity-30">Node_03</span>
+    </div>
+    <div>
+      <h2 className="text-5xl font-black uppercase leading-[0.85] tracking-tighter italic">Durban<br/>Central<br/>Sector</h2>
+      <p className="text-[10px] font-black uppercase mt-6 tracking-widest leading-tight border-t-2 border-black pt-4">Primary_Logistics_Hub</p>
+    </div>
+  </div>
+
+  {/* BLOCK 04: SYSTEM STATUS */}
+  <div className="bg-[var(--color-accent)] p-8 md:p-12 flex flex-col justify-between aspect-square border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+    <div className="flex justify-between items-start">
+      <span className="text-[10px] font-black uppercase tracking-[0.4em] bg-black text-white px-2 py-1">Node_04</span>
+    </div>
+    <div className="space-y-4">
+      <div className="h-1 w-full bg-black/20">
+        <div className="h-full bg-black w-3/4" />
+      </div>
+      <h2 className="text-3xl font-black uppercase italic leading-none">System_Live</h2>
+      <p className="text-[10px] font-black uppercase tracking-widest opacity-60">Network_Latency: 14ms</p>
+    </div>
+  </div>
+</section>
 
       {/* 04: CORE CAPABILITIES */}
       <section className="grid grid-cols-1 md:grid-cols-4 border-b-4 border-black divide-x-0 md:divide-x-4 divide-y-4 md:divide-y-0 divide-black">

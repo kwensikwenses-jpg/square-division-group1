@@ -3,12 +3,35 @@
 @tailwind utilities;
 
 :root {
-  --background: #edeae7; /* Your bone-white hex */
-  --foreground: #0a0a0a;
+  /* Colors */
+  --background: #edeae7;
+  --foreground: #000000;
+  --color-accent: #ff9e00; /* The Swim Club high-visibility orange */
+  
+  /* Spacing System */
+  --spacing: 0.25rem; /* 4px base unit */
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  /* We will use a clean sans-serif like Inter */
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    /* Using a monospaced font for that "technical registry" look */
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  /* Custom marquee for the scrolling text we added to the landing page */
+  .animate-marquee {
+    display: flex;
+    width: fit-content;
+    animation: marquee 25s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
 }
