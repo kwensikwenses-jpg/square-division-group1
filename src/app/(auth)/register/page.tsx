@@ -3,10 +3,14 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
+import MenuOverlay from '@/components/MenuOverlay'; // Required for Navbar functionality
 import { supabase } from '@/utils/supabase';
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
+  
+  // Menu State (Fixes Vercel Build Error)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   // Form State
   const [email, setEmail] = useState("");
@@ -19,23 +23,19 @@ const RegisterPage: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    // 1. Sanitize the email to remove accidental spaces or uppercase letters
     const cleanEmail = email.trim().toLowerCase();
 
-    // 2. Sign up the user in Supabase Auth
     const { data, error: authError } = await supabase.auth.signUp({
       email: cleanEmail,
       password: password,
     });
 
     if (authError) {
-      // Specifically catch the "invalid email" or "user already exists" errors
       alert(`Registration Error: ${authError.message}`);
       setLoading(false);
       return;
     }
 
-    // 3. If Auth is successful, save the business profile details to the public.profiles table
     if (data.user) {
       const { error: profileError } = await supabase
         .from('profiles')
@@ -44,16 +44,15 @@ const RegisterPage: React.FC = () => {
             id: data.user.id, 
             business_name: businessName, 
             category: category,
-            tier: 'silver' // Default tier for new signups
+            tier: 'silver' 
           },
         ]);
 
       if (profileError) {
         alert("Account created, but profile database failed: " + profileError.message);
       } else {
-        // Provide clear feedback for the investor demo
-        alert("Registration successful! Check your email if verification is enabled, or proceed to login.");
-        router.push('/login');
+        alert("Registration successful! Check your email if verification is enabled.");
+        router.push('/business/login');
       }
     }
 
@@ -61,15 +60,17 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#edeae7] text-black">
-      <Navbar />
+    <main className="min-h-screen bg-[#edeae7] text-black font-mono">
+      {/* 01: NAVIGATION & MENU OVERLAY */}
+      <Navbar onMenuClick={() => setIsMenuOpen(true)} />
+      <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
       <div className="flex flex-col md:flex-row min-h-screen pt-20">
         
         {/* LEFT SIDE: Fixed Branding */}
         <div className="w-full md:w-1/3 p-12 bg-black text-[#edeae7] flex flex-col justify-between border-r border-black">
           <div>
-            <h1 className="text-4xl font-black uppercase tracking-tighter mb-4 leading-none">
+            <h1 className="text-4xl font-black uppercase tracking-tighter mb-4 leading-none italic">
               Join the<br/>Ecosystem.
             </h1>
             <p className="opacity-60 text-[10px] font-bold uppercase tracking-[0.3em] leading-relaxed">
@@ -88,30 +89,48 @@ const RegisterPage: React.FC = () => {
             {/* Identity Section */}
             <section className="space-y-6">
               <h2 className="text-[10px] font-black uppercase tracking-[0.4em] border-b border-black pb-2 opacity-40">01. Identity</h2>
-              <input 
-                type="text" 
-                placeholder="BUSINESS NAME" 
-                required
-                value={businessName}
-                onChange={(e) => setBusinessName(e.target.value)}
-                className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20 focus:border-[#6082a3] transition-colors" 
-              />
-              <input 
-                type="email" 
-                placeholder="EMAIL ADDRESS" 
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20 focus:border-[#6082a3] transition-colors" 
-              />
-              <input 
-                type="password" 
-                placeholder="PASSWORD" 
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20 focus:border-[#6082a3] transition-colors" 
-              />
+              
+              <div className="space-y-2">
+                <label htmlFor="business-name" className="hidden">Business Name</label>
+                <input 
+                  id="business-name"
+                  type="text" 
+                  title="Business Name"
+                  placeholder="BUSINESS NAME" 
+                  required
+                  value={businessName}
+                  onChange={(e) => setBusinessName(e.target.value)}
+                  className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20 focus:border-[#6082a3] transition-colors" 
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="email-address" className="hidden">Email Address</label>
+                <input 
+                  id="email-address"
+                  type="email" 
+                  title="Email Address"
+                  placeholder="EMAIL ADDRESS" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20 focus:border-[#6082a3] transition-colors" 
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="password" className="hidden">Password</label>
+                <input 
+                  id="password"
+                  type="password" 
+                  title="Password"
+                  placeholder="PASSWORD" 
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20 focus:border-[#6082a3] transition-colors" 
+                />
+              </div>
             </section>
 
             {/* Category Section */}
@@ -140,13 +159,12 @@ const RegisterPage: React.FC = () => {
             <button 
               type="submit" 
               disabled={loading}
-              className="w-full bg-black text-[#edeae7] py-6 font-black uppercase tracking-[0.3em] text-xs hover:bg-[#6082a3] transition-all disabled:opacity-50 active:scale-[0.98]"
+              className="w-full bg-black text-[#edeae7] py-6 font-black uppercase tracking-[0.3em] text-xs hover:bg-[#6082a3] transition-all disabled:opacity-50 active:scale-[0.98] shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)]"
             >
               {loading ? "Processing Network Node..." : "Submit Application"}
             </button>
           </form>
         </div>
-
       </div>
     </main>
   );

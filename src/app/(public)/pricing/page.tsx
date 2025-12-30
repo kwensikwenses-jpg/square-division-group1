@@ -1,38 +1,62 @@
 "use client";
-import React from 'react';
-import Navbar from '../../../components/Navbar';
+
+import React, { useState } from 'react';
+import Navbar from '@/components/Navbar';
+import MenuOverlay from '@/components/MenuOverlay';
 
 const tiers = [
-  { name: "Silver", price: "Free", features: ["Basic Profile", "Search Listing", "Direct Chat (Limited)"] },
-  { name: "Gold", price: "R299/mo", features: ["Featured Search Placement", "Analytics Dashboard", "Unlimited Chat", "Route Map Integration"] },
-  { name: "Platinum", price: "R899/mo", features: ["Priority Support", "Investor Network Access", "Verified Badge", "Custom Sketch Branding"] }
+  { name: "Silver", price: "Free", features: ["Basic Profile", "Search Listing", "Direct Chat (Limited)"], color: "bg-white" },
+  { name: "Gold", price: "R299", features: ["Featured Search Placement", "Analytics Dashboard", "Unlimited Chat", "Route Map Integration"], color: "bg-[#edeae7]" },
+  { name: "Platinum", price: "R899", features: ["Priority Support", "Investor Network Access", "Verified Badge", "Custom Sketch Branding"], color: "bg-[#6082a3]" }
 ];
 
 export default function PricingPage() {
+  // State for mobile menu satisfying TypeScript NavbarProps
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <main className="min-h-screen bg-[#edeae7] pt-32 px-6">
-      <Navbar />
-      <header className="max-w-7xl mx-auto mb-16">
-        <h1 className="text-8xl font-black uppercase tracking-tighter italic">Tier / Growth</h1>
-        <p className="uppercase text-sm font-bold tracking-[0.3em] opacity-50 mt-4">Scalability for Local Partners</p>
+    <main className="min-h-screen bg-[#edeae7] font-mono text-black selection:bg-[#6082a3] selection:text-white">
+      {/* 01: NAVIGATION SYNC */}
+      <Navbar onMenuClick={() => setIsMenuOpen(true)} />
+      <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+
+      <header className="max-w-7xl mx-auto pt-48 px-8 mb-16">
+        <p className="text-[10px] font-black uppercase tracking-[0.5em] mb-4 opacity-40">System_Monetization_v2026</p>
+        <h1 className="text-7xl md:text-9xl font-black uppercase tracking-tighter italic leading-none">
+          Tier / <span className="text-[#6082a3]">Growth</span>
+        </h1>
+        <p className="uppercase text-xs font-bold tracking-[0.3em] opacity-60 mt-6 max-w-xl leading-relaxed">
+          Scalable infrastructure access for local partners and regional business nodes.
+        </p>
       </header>
       
-      <div className="grid grid-cols-1 md:grid-cols-3 border border-black divide-y md:divide-y-0 md:divide-x divide-black max-w-7xl mx-auto">
+      {/* PRICING GRID */}
+      <div className="grid grid-cols-1 md:grid-cols-3 border-y-4 md:border-4 border-black divide-y-4 md:divide-y-0 md:divide-x-4 divide-black max-w-7xl mx-auto bg-white mb-20 shadow-[16px_16px_0px_0px_rgba(0,0,0,1)]">
         {tiers.map((tier) => (
-          <div key={tier.name} className="p-12 hover:bg-black hover:text-[#edeae7] transition-all group flex flex-col justify-between min-h-[500px]">
+          <div key={tier.name} className={`p-12 hover:bg-black hover:text-white transition-all duration-300 group flex flex-col justify-between min-h-[650px] ${tier.color === 'bg-[#6082a3]' ? 'md:bg-[#6082a3]' : ''}`}>
             <div>
-              <h2 className="text-4xl font-black uppercase mb-2 italic">{tier.name}</h2>
-              <p className="text-5xl font-light tracking-tighter mb-8">{tier.price}</p>
-              <ul className="space-y-4 uppercase text-[10px] font-bold tracking-widest">
+              <div className="flex justify-between items-start mb-12">
+                <h2 className="text-4xl font-black uppercase italic tracking-tighter">{tier.name}</h2>
+                <span className="text-[10px] font-black border-2 border-current px-2 py-1 uppercase opacity-40 group-hover:opacity-100">Node_v.{tier.name[0]}</span>
+              </div>
+              
+              <div className="mb-12">
+                <p className="text-6xl font-black tracking-tighter leading-none">{tier.price}</p>
+                {tier.price !== "Free" && <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">per_month / access_fee</span>}
+              </div>
+
+              <ul className="space-y-6 uppercase text-[11px] font-bold tracking-[0.1em]">
                 {tier.features.map(f => (
-                  <li key={f} className="flex gap-2 border-b border-black group-hover:border-[#edeae7]/30 pb-2 italic">
-                    — {f}
+                  <li key={f} className="flex gap-4 items-start border-b-2 border-black/10 group-hover:border-white/20 pb-4">
+                    <span className="opacity-40">→</span>
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
             </div>
-            <button className="w-full border-2 border-black group-hover:border-[#edeae7] py-4 uppercase font-black tracking-widest text-xs hover:bg-[#6082a3]">
-              Join Tier
+
+            <button className="w-full border-4 border-black py-6 uppercase font-black tracking-widest text-sm bg-transparent group-hover:border-white group-hover:bg-white group-hover:text-black transition-all hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[4px_4px_0px_0px_rgba(96,130,163,1)]">
+              Initialize_{tier.name}_Tier
             </button>
           </div>
         ))}

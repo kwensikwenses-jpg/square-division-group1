@@ -6,7 +6,7 @@ export default function BusinessDashboard() {
   return (
     <main className="min-h-screen bg-[#edeae7] flex flex-col font-mono pb-20">
       <div className="flex-1 p-8 space-y-8 pb-32">
-        {/* HEADER SECTION */}
+        {/* HEADER SECTION */}F
         <header className="border-b-4 border-black pb-8">
           <h1 className="text-5xl font-black italic uppercase tracking-tighter text-black">
             Control_Center
