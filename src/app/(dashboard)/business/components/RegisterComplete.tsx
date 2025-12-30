@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 
 export default function RegisterComplete({ businessName = "ENTITY_NAME" }) {
   return (
@@ -8,57 +9,46 @@ export default function RegisterComplete({ businessName = "ENTITY_NAME" }) {
       
       {/* SUCCESS HEADER */}
       <div className="bg-black text-white p-8 text-center border-b-4 border-black">
-        <div className="h-16 w-16 border-4 border-white mx-auto mb-6 flex items-center justify-center">
-           <span className="text-3xl">✓</span>
+        <div className="inline-block bg-green-500 text-black px-4 py-1 text-[10px] font-black uppercase mb-4">
+          Registration_Successful
         </div>
-        <h2 className="text-3xl font-black italic uppercase tracking-tighter">Registration_Complete</h2>
-        <p className="text-[10px] uppercase tracking-[0.4em] mt-2 opacity-60">Welcome_To_The_Ecosystem, {businessName}</p>
+        <h2 className="text-4xl font-black italic uppercase tracking-tighter">
+          Welcome_to_the_Grid
+        </h2>
       </div>
 
-      <div className="p-8 space-y-10">
-        
-        {/* STATUS TICKER */}
-        <div className="border-2 border-black p-6 bg-[#edeae7] relative overflow-hidden">
-          <div className="flex justify-between items-center relative z-10">
-            <div>
-              <p className="text-[8px] font-black uppercase opacity-40 italic">Current_Status</p>
-              <p className="text-xl font-black uppercase italic tracking-tighter text-[#6082a3]">Pending_Manual_Review</p>
-            </div>
-            <div className="text-right">
-              <p className="text-[8px] font-black uppercase opacity-40 italic">Estimated_Wait</p>
-              <p className="text-xl font-black italic tracking-tighter">24-48_HOURS</p>
-            </div>
-          </div>
-          {/* Progress Bar Background */}
-          <div className="h-1 w-full bg-black/10 mt-6 relative">
-            <div className="absolute left-0 top-0 h-full bg-black w-1/4 animate-pulse"></div>
-          </div>
+      {/* BODY CONTENT */}
+      <div className="p-10 space-y-8">
+        <div className="space-y-2">
+          <p className="text-[10px] font-black uppercase opacity-40">Registered_Entity</p>
+          <p className="text-2xl font-black uppercase italic border-l-4 border-black pl-4">
+            {businessName}
+          </p>
         </div>
 
-        {/* NEXT STEPS GRID */}
-        <div className="space-y-6">
-          <h3 className="text-[10px] font-black uppercase tracking-widest italic border-b-2 border-black pb-2">Operational_Next_Steps</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="border-2 border-black p-4 space-y-2">
-              <p className="text-[10px] font-black uppercase tracking-tighter">01_Email_Verification</p>
-              <p className="text-[8px] opacity-60 leading-relaxed uppercase">Check your inbox for the secondary security link.</p>
-            </div>
-            <div className="border-2 border-black p-4 space-y-2">
-              <p className="text-[10px] font-black uppercase tracking-tighter">02_Profile_Drafting</p>
-              <p className="text-[8px] opacity-60 leading-relaxed uppercase">You can begin editing your profile while review is in progress.</p>
-            </div>
-          </div>
+        <div className="bg-[#edeae7] border-2 border-black p-6 space-y-4">
+          <p className="text-xs font-bold leading-relaxed">
+            Your business profile is now propagating through the KZN Partner Ecosystem. 
+            Access your control panel to begin configuring your node data and live deals.
+          </p>
         </div>
 
-        {/* RESOURCE DOWNLOAD */}
-        <div className="border-2 border-black p-6 flex justify-between items-center group cursor-pointer hover:bg-black hover:text-white transition-all">
-          <div className="flex items-center gap-4">
-            <div className="h-10 w-8 border-2 border-current flex flex-col justify-end p-1">
-              <div className="h-1 w-full bg-current opacity-40"></div>
-            </div>
-            <div>
-              <p className="text-[10px] font-black uppercase italic">Business_Operations_Guide.PDF</p>
-              <p className="text-[8px] opacity-40 uppercase">Essential reading for new partners</p>
-            </div>
-          </div>
-          <span className="text-xl font-black group-hover:translate-y-1 transition-
+        <div className="flex flex-col gap-4">
+          <Link 
+            href="/business" 
+            className="w-full bg-black text-white p-6 text-center text-xl font-black italic uppercase hover:bg-[#6082a3] transition-all"
+          >
+            Enter_Dashboard →
+          </Link>
+          <button 
+            onClick={() => window.print()} 
+            className="text-[10px] font-black uppercase underline opacity-40 hover:opacity-100"
+          >
+            Print_Registration_Receipt
+          </button>
+        </div>
+      </div>
+    </div> 
+    /* This final </div> was missing */
+  );
+}
