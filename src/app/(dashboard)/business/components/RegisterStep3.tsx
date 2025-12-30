@@ -16,35 +16,33 @@ export default function RegisterStep3({ data, updateFields, onNext, onBack }: an
       <div className="p-10 space-y-8">
         <div className="space-y-4">
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest">Business_Email</label>
+            <label htmlFor="email" className="text-xs font-black uppercase tracking-widest">Business_Email</label>
             <input 
+              id="email"
               type="email" 
               value={data.email}
               onChange={(e) => updateFields({ email: e.target.value })}
               placeholder="NODEMAIL@KAI.CO.ZA" 
-              className="w-full border-4 border-black p-4 text-sm font-bold uppercase focus:bg-[#edeae7] outline-none transition-colors"
+              className="w-full border-4 border-black p-4 text-sm font-bold uppercase focus:bg-[#edeae7] outline-none"
             />
           </div>
 
           <div className="space-y-2">
-            <label className="text-xs font-black uppercase tracking-widest">Support_Phone</label>
+            <label htmlFor="phone" className="text-xs font-black uppercase tracking-widest">Support_Phone</label>
             <input 
+              id="phone"
               type="tel" 
               value={data.phone}
               onChange={(e) => updateFields({ phone: e.target.value })}
               placeholder="+27..." 
-              className="w-full border-4 border-black p-4 text-sm font-bold uppercase focus:bg-[#edeae7] outline-none transition-colors"
+              className="w-full border-4 border-black p-4 text-sm font-bold uppercase focus:bg-[#edeae7] outline-none"
             />
           </div>
         </div>
 
         <div className="flex gap-4 pt-4">
-          <button onClick={onBack} className="w-1/3 border-4 border-black p-4 font-black uppercase hover:bg-black/5 transition-all">
-            Back
-          </button>
-          <button onClick={onNext} className="w-2/3 bg-black text-white p-4 font-black uppercase hover:bg-[#6082a3] transition-all">
-            Review_Data →
-          </button>
+          <button onClick={onBack} className="w-1/3 border-4 border-black p-4 font-black uppercase hover:bg-black/5">Back</button>
+          <button onClick={onNext} className="w-2/3 bg-black text-white p-4 font-black uppercase hover:bg-[#6082a3]">Review_Data →</button>
         </div>
       </div>
     </div>
