@@ -1,85 +1,54 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
-import { supabase } from '@/utils/supabase';
-
-// --- TECHNICAL COMPONENT IMPORTS ---
-import AnalyticsNode from './components/AnalyticsNode';
-import DocumentVault from './components/DocumentVault';
-import SystemLogs from './components/SystemLogs';
-import LeadResponseNode from '@/components/LeadResponseNode'; 
-import SearchOverlay from '@/components/SearchOverlay'; 
-
-// Local interface for Lead Data handling
-interface Lead {
-  id: string;
-  title: string;
-  budget: string;
-}
+import React from 'react';
 
 export default function BusinessDashboard() {
-  // --- STATE MANAGEMENT ---
-  const [businessName, setBusinessName] = useState("Loading...");
-  const [tier, setTier] = useState("Silver");
-  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-
-  // --- 1. SYSTEM INITIALIZATION EFFECT ---
-  // Fetches real business data and listens for 'CMD+K' search shortcut
-  useEffect(() => {
-    const getProfile = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        const { data, error } = await supabase
-          .from('profiles')
-          .select('business_name, tier')
-          .eq('id', user.id)
-          .single();
-
-        if (data && !error) {
-          setBusinessName(data.business_name);
-          setTier(data.tier);
-        }
-      }
-    };
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      // Trigger search overlay on Ctrl+K or Meta+K
-      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        setIsSearchOpen(true);
-      }
-    };
-
-    getProfile();
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
-
   return (
-    <main className="min-h-screen bg-[#edeae7] flex flex-col font-mono animate-in fade-in duration-500">
-      
-      {/* --- SCROLLABLE CONTENT AREA --- */}
+    <main className="min-h-screen bg-[#edeae7] flex flex-col font-mono pb-20">
       <div className="flex-1 p-8 space-y-8 pb-32">
-        
-        {/* SECTION 00: SYSTEM HEADER [Logic: Greets user with real DB Name] */}
+        {/* HEADER SECTION */}
         <header className="border-b-4 border-black pb-8">
-          <div className="flex justify-between items-end">
-            <div className="space-y-2">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 italic">System_User_Greeting</p>
-              <h1 className="text-7xl font-black uppercase tracking-tighter italic leading-none">
-                Welcome, {businessName}
-              </h1>
-            </div>
-            <div className="text-right">
-              {/* Tier status reflected from DB Profile */}
-              <span className="bg-black text-[#edeae7] px-6 py-2 text-[10px] font-black uppercase tracking-[0.3em] inline-block mb-2 shadow-[4px_4px_0px_0px_rgba(96,130,163,1)]">
-                {tier} Status
-              </span>
-              <p className="text-[9px] uppercase font-bold opacity-40">Operational Overview // {new Date().getFullYear()}</p>
-            </div>
-          </div>
+          <h1 className="text-5xl font-black italic uppercase tracking-tighter text-black">
+            Control_Center
+          </h1>
+          <p className="text-[10px] font-bold opacity-40 uppercase tracking-[0.4em] mt-2">
+            Node_Status: Active // RSA_KZN_GRID
+          </p>
         </header>
 
-        {/* SECTION 01: TECHNICAL TELEMETRY [Logic: Real-time business metrics] */}
-      <div className="grid grid-cols-1 md:grid-cols-4 border-2 border-black divide-x-2 divide-black bg-white">
+        {/* SECTION 01: TECHNICAL TELEMETRY */}
+        <div className="grid grid-cols-1 md:grid-cols-4 border-4 border-black divide-x-4 divide-black bg-white shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+          <div className="p-8">
+            <p className="text-[10px] font-black opacity-40 uppercase mb-2">Total_Leads</p>
+            <h3 className="text-5xl font-black italic tracking-tighter">142</h3>
+          </div>
+          <div className="p-8">
+            <p className="text-[10px] font-black opacity-40 uppercase mb-2">Conversion</p>
+            <h3 className="text-5xl font-black italic tracking-tighter">12%</h3>
+          </div>
+          <div className="p-8">
+            <p className="text-[10px] font-black opacity-40 uppercase mb-2">Grid_Rank</p>
+            <h3 className="text-5xl font-black italic tracking-tighter">#04</h3>
+          </div>
+          <div className="p-8 bg-black text-white">
+            <p className="text-[10px] font-black opacity-40 uppercase mb-2 text-white/50">System_Uptime</p>
+            <h3 className="text-5xl font-black italic tracking-tighter">99.9</h3>
+          </div>
+        </div>
+
+        {/* SECTION 02: RECENT DATA LOGS */}
+        <section className="space-y-4">
+          <h2 className="text-xs font-black uppercase tracking-widest italic border-b-2 border-black pb-2">Recent_Activity_Logs</h2>
+          <div className="bg-white border-4 border-black divide-y-2 divide-black">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="p-4 flex justify-between items-center hover:bg-black hover:text-white transition-all group">
+                <span className="text-[10px] font-bold">INBOUND_INQUIRY_00{i}</span>
+                <span className="text-[10px] opacity-40 group-hover:opacity-100 uppercase italic">Status: Pending_Relay</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
