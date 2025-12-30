@@ -3,96 +3,103 @@
 import React, { useState } from 'react';
 import Navbar from '@/components/Navbar';
 import MenuOverlay from '@/components/MenuOverlay';
+import Link from 'next/link';
 
-const TransportPage: React.FC = () => {
+export default function LandingPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#edeae7] text-black font-mono selection:bg-[#6082a3] selection:text-white">
+    <main className="min-h-screen bg-[#edeae7] text-black font-mono selection:bg-black selection:text-white">
       <Navbar onMenuClick={() => setIsMenuOpen(true)} />
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-      
-      {/* 01: HEADER SECTION */}
-      <section className="pt-32 px-6 md:px-12 border-b-4 border-black pb-12 bg-white">
-        <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-4 opacity-40 italic">Logistics_Protocol / Route_Engine</p>
-        <h1 className="text-7xl md:text-9xl font-black tracking-tighter uppercase italic leading-[0.85]">
-          Transport<br/>& <span className="text-[#6082a3]">Logistics</span>
-        </h1>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mt-8 gap-4">
-            <p className="uppercase text-xs font-black tracking-[0.3em] opacity-60">KZN Regional Hub / Active Node Discovery</p>
-            <div className="flex gap-4">
-                <span className="text-[10px] font-black border-2 border-black px-3 py-1 bg-[#edeae7]">LIVE_FEED</span>
-                <span className="text-[10px] font-black border-2 border-black px-3 py-1 bg-green-500 text-white animate-pulse">SYSTEM_ONLINE</span>
-            </div>
-        </div>
-      </section>
 
-      {/* 02: THE SIMULATED MAP */}
-      <section className="w-full aspect-video bg-white border-b-4 border-black relative overflow-hidden flex items-center justify-center p-12">
-        {/* FIXED: changed 'size' to 'backgroundSize' to resolve the redline/build error */}
-        <div 
-          className="absolute inset-0 opacity-[0.03] pointer-events-none" 
-          style={{ 
-            backgroundImage: 'radial-gradient(circle, black 1px, transparent 1px)', 
-            backgroundSize: '40px 40px' 
-          }} 
-        />
-        
-        {/* Animated Radar Rings */}
-        <div className="absolute h-[600px] w-[600px] border-2 border-black/5 rounded-full animate-[ping_3s_infinite]" />
-        <div className="absolute h-[400px] w-[400px] border-2 border-black/10 rounded-full animate-[ping_5s_infinite]" />
-        
-        <div className="z-10 text-center">
-          <div className="inline-block px-6 py-2 bg-black text-white text-[10px] font-black mb-8 tracking-[0.5em] italic">
-            SCANNING_DURBAN_PORT_SECTOR
+      {/* --- HERO SECTION: GIANT TYPE & COLOR BLOCK --- */}
+      <section className="pt-24 md:pt-32 px-4 md:px-10">
+        <div className="border-[6px] border-black bg-[#6082a3] p-6 md:p-12 shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex flex-col justify-between min-h-[70vh]">
+          <div className="flex justify-between items-start">
+            <span className="text-[10px] font-black uppercase tracking-[0.4em] bg-black text-white px-2 py-1">v.2026.01</span>
+            <span className="text-sm font-black italic uppercase tracking-tighter">South Africa / KZN</span>
           </div>
           
-          {/* Mock Node Points */}
-          <div className="relative flex justify-center gap-20">
-             <div className="flex flex-col items-center group cursor-crosshair">
-                <div className="h-4 w-4 bg-green-500 border-2 border-black rounded-full mb-2 group-hover:scale-150 transition-transform" />
-                <span className="text-[8px] font-black uppercase group-hover:bg-black group-hover:text-white px-1">Rossburgh_Node</span>
-             </div>
-             <div className="flex flex-col items-center mt-12 group cursor-crosshair">
-                <div className="h-4 w-4 bg-[#6082a3] border-2 border-black rounded-full mb-2 animate-pulse group-hover:scale-150 transition-transform" />
-                <span className="text-[8px] font-black uppercase group-hover:bg-black group-hover:text-white px-1">Container_Terminal</span>
-             </div>
-             <div className="flex flex-col items-center group cursor-crosshair">
-                <div className="h-4 w-4 bg-black border-2 border-black rounded-full mb-2 group-hover:scale-150 transition-transform" />
-                <span className="text-[8px] font-black uppercase group-hover:bg-black group-hover:text-white px-1">Umgeni_Hub</span>
-             </div>
-          </div>
-        </div>
+          <h1 className="text-[12vw] md:text-[10vw] font-black uppercase italic leading-[0.8] tracking-tighter text-white mt-12 mb-8">
+            The Grid<br/>Ecosystem
+          </h1>
 
-        {/* Technical Sidebar */}
-        <div className="absolute left-8 bottom-8 border-2 border-black p-4 bg-white hidden md:block">
-           <p className="text-[8px] font-black uppercase opacity-40 mb-2">Network_Coordinates</p>
-           <p className="text-[10px] font-bold">LAT: -29.8587</p>
-           <p className="text-[10px] font-bold">LONG: 31.0218</p>
+          <div className="flex flex-col md:flex-row justify-between items-end gap-6">
+            <p className="max-w-md text-sm md:text-base font-bold uppercase leading-tight text-white">
+              Connecting local industry nodes into a single, high-performance B2B marketplace.
+            </p>
+            <Link href="/choice" className="w-full md:w-auto px-12 py-6 bg-black text-white text-xl font-black uppercase italic hover:bg-white hover:text-black transition-all border-4 border-black text-center">
+              Join the Network →
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* 03: DIRECTORY GRID */}
-      <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b-4 border-black bg-black gap-px">
-        {[
-          { id: '01', name: "Rossburgh Rail", status: "On Time" },
-          { id: '02', name: "Durban Container Terminal", status: "Active" },
-          { id: '03', name: "Coastal Freight", status: "Delay - 15m" },
-        ].map((item) => (
-          <div key={item.id} className="p-12 group bg-white hover:bg-black hover:text-[#edeae7] transition-all duration-300 cursor-pointer flex flex-col justify-between h-64">
-            <div>
-              <span className="text-5xl font-black opacity-10 group-hover:opacity-100 italic transition-opacity">{item.id}</span>
-              <h3 className="text-3xl font-black uppercase mt-4 mb-2 tracking-tighter leading-none italic">{item.name}</h3>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className={`w-3 h-3 border-2 border-black group-hover:border-white ${item.status.includes('Delay') ? 'bg-red-500 animate-pulse' : 'bg-green-500'}`} />
-              <p className="text-[11px] font-black uppercase tracking-widest opacity-60 group-hover:opacity-100">{item.status}</p>
-            </div>
+      {/* --- BENTO GRID: STATS & INFO --- */}
+      <section className="px-4 md:px-10 py-20 grid grid-cols-1 md:grid-cols-3 gap-10">
+        {/* Block 1: The "Why" */}
+        <div className="border-[4px] border-black p-8 bg-white flex flex-col justify-between aspect-square">
+          <h2 className="text-4xl font-black uppercase italic leading-none">Hyper<br/>Local.</h2>
+          <p className="text-xs font-bold uppercase opacity-60">Focusing exclusively on KwaZulu-Natal supply chains.</p>
+        </div>
+
+        {/* Block 2: Dark Mode Callout */}
+        <div className="border-[4px] border-black p-8 bg-black text-white flex flex-col justify-between aspect-square">
+          <div className="flex justify-between">
+            <span className="text-6xl font-black italic opacity-20">02</span>
+            <div className="h-4 w-4 bg-green-500 rounded-full animate-pulse" />
           </div>
-        ))}
+          <h2 className="text-3xl font-black uppercase leading-tight">Verified<br/>Business<br/>Nodes</h2>
+        </div>
+
+        {/* Block 3: The Value */}
+        <div className="border-[4px] border-black p-8 bg-white flex flex-col justify-between aspect-square shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
+          <h2 className="text-4xl font-black uppercase italic leading-none">Direct<br/>Trade.</h2>
+          <p className="text-[10px] font-black uppercase tracking-widest border-t-2 border-black pt-4">No middle-men. Pure B2B interaction.</p>
+        </div>
       </section>
+
+      {/* --- SCROLLING TICKER (SwimClub Signature Style) --- */}
+      <div className="bg-black py-6 overflow-hidden border-y-4 border-black whitespace-nowrap">
+        <div className="flex animate-marquee text-white font-black uppercase italic text-4xl gap-20">
+          <span>Durban Port</span>
+          <span>Rossburgh Logistics</span>
+          <span>KZN Food Supply</span>
+          <span>Coastal Transport</span>
+          <span>Government Tenders</span>
+          <span>Durban Port</span>
+          <span>Rossburgh Logistics</span>
+        </div>
+      </div>
+
+      {/* --- FOOTER / CALL TO ACTION --- */}
+      <footer className="p-10 md:p-20 text-center">
+        <Link href="/marketplace" className="text-[15vw] font-black uppercase italic tracking-tighter hover:text-[#6082a3] transition-colors leading-none">
+          Explore_The_Grid
+        </Link>
+        <div className="mt-20 flex flex-col md:flex-row justify-between items-center border-t-4 border-black pt-8 gap-4">
+          <p className="text-[10px] font-black uppercase tracking-[0.5em] opacity-40">System_Monetization_v1</p>
+          <div className="flex gap-8 text-[10px] font-black uppercase">
+            <Link href="/investor-pitch">Investor Deck</Link>
+            <Link href="/pricing">Pricing</Link>
+            <Link href="/support">Support</Link>
+          </div>
+        </div>
+      </footer>
+
+      {/* Tailwind Marquee Animation Logic */}
+      <style jsx global>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-marquee {
+          display: flex;
+          width: fit-content;
+          animation: marquee 20s linear infinite;
+        }
+      `}</style>
     </main>
   );
-};
-
-export default TransportPage;
+}
