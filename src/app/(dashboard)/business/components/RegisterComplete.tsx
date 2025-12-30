@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function RegisterComplete({ businessName = "ENTITY_NAME" }) {
+// businessName is passed from the Master Controller to show the client's actual name
+export default function RegisterComplete({ businessName = "ENTITY_NAME" }: { businessName?: string }) {
   return (
     <div className="w-full max-w-2xl border-4 border-black bg-white shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] font-mono animate-in zoom-in-95 duration-500">
       
@@ -34,21 +35,21 @@ export default function RegisterComplete({ businessName = "ENTITY_NAME" }) {
         </div>
 
         <div className="flex flex-col gap-4">
+          {/* This Link connects the registration flow directly to the live dashboard demo */}
           <Link 
             href="/business" 
-            className="w-full bg-black text-white p-6 text-center text-xl font-black italic uppercase hover:bg-[#6082a3] transition-all"
+            className="w-full bg-black text-white p-6 text-center text-xl font-black italic uppercase hover:bg-[#6082a3] transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,0.2)] active:translate-y-1 active:shadow-none"
           >
             Enter_Dashboard →
           </Link>
           <button 
             onClick={() => window.print()} 
-            className="text-[10px] font-black uppercase underline opacity-40 hover:opacity-100"
+            className="text-[10px] font-black uppercase underline opacity-40 hover:opacity-100 transition-opacity"
           >
             Print_Registration_Receipt
           </button>
         </div>
       </div>
     </div> 
-    /* This final </div> was missing */
   );
 }
