@@ -54,4 +54,4 @@ export default function LibraryPage() {
                   <span>Type: {node.type}</span>
                   <span>Dist: {node.dist}</span>
                 </div>
-                <button className="w-full mt-6 border-2 border-black py-2 text-[9px] font-black uppercase hover:bg-black hover:text-white transition-
+               <button className="w-full mt-6 border-2 border-black py-2 text-[9px] font-black uppercase hover:bg-black hover:text-white transition-all">

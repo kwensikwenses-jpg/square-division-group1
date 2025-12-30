@@ -59,4 +59,4 @@ export default function UserSettingsPage() {
                   <p className="text-[10px] font-black uppercase">Multi-Factor_Auth (2FA)</p>
                   <span className="text-[8px] font-black bg-green-600 text-white px-2 py-1">ACTIVE</span>
                 </div>
-                <p className="text-[8px] opacity-60 leading-relaxed uppercase">Codes sent to +27 *** *** **8
+            <p className="text-[8px] opacity-60 leading-relaxed uppercase">Codes sent to +27 *** *** **8</p>

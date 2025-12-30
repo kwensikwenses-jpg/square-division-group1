@@ -47,4 +47,4 @@ export default function LeadManager() {
         <div className="space-y-4">
           {leads.map((lead) => (
             <div key={lead.id} className={`border-4 border-black p-6 bg-white flex flex-col md:flex-row justify-between items-center gap-6 hover:translate-x-2 transition-all cursor-pointer group ${lead.status === 'UNREAD' ? 'shadow-[10px_10px_0px_0px_rgba(220,20,60,0.2)]' : 'shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]'}`}>
-              <div className="flex items-center gap-8 w-full md:w-
+        <div className="flex items-center gap-8 w-full md:w-auto">

@@ -8,11 +8,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const pathname = usePathname();
 
   const menuItems = [
-    { name: 'Overview', path: '/business' },
-    { name: 'Marketplace', path: '/business/marketplace' },
-    { name: 'Messages', path: '/business/messages' },
-    { name: 'Profile Editor', path: '/business/profile' },
-  ];
+  { name: 'Overview', path: '/business' },
+  { name: 'Analytics', path: '/business/stats' }, // New Link
+  { name: 'Marketplace', path: '/business/marketplace' },
+  { name: 'Messages', path: '/business/messages' },
+  { name: 'Profile Editor', path: '/business/profile' },
+];
 
   return (
     <main className="min-h-screen bg-[#edeae7] text-black">

@@ -13,6 +13,7 @@ import RecentActivity from '@/components/explore/RecentActivity';
 import EventsNode from '@/components/explore/EventsNode';
 import ReviewsNode from '@/components/explore/ReviewsNode';
 import UserStatsNode from '@/components/explore/UserStatsNode';
+import FilterNode from '@/components/explore/FilterNode';
 
 export default function ExplorePage() {
   // --- STATE MANAGEMENT ---
@@ -22,7 +23,6 @@ export default function ExplorePage() {
     <main className="min-h-screen bg-[#edeae7] font-mono pb-20 animate-in fade-in duration-700">
       
       {/* SECTION 01: SYSTEM NAVIGATION, MAP & CATEGORIES */}
-      {/* This is the top "Command Center" of the page */}
       <section className="p-8 space-y-8">
         <div className="space-y-4">
           <MapModeSwitcher onModeChange={(mode) => setActiveMode(mode)} />
@@ -71,38 +71,12 @@ export default function ExplorePage() {
           <ReviewsNode />
         </div>
 
-// ... imports
-import FilterNode from '@/components/explore/FilterNode';
-
-export default function ExplorePage() {
-  // ... state
-  return (
-    <main className="min-h-screen bg-[#edeae7] font-mono pb-20">
-      {/* ... Map and Navigation */}
-
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 px-8 mt-12">
-        {/* LEFT COLUMN: PRIMARY FEED */}
-        <div className="lg:col-span-8 space-y-12">
-           {/* ... Deals, Recommendations, etc. */}
-        </div>
-
-        {/* RIGHT COLUMN: SIDEBAR */}
-        <aside className="lg:col-span-4 space-y-8">
-          {/* PLACE FILTER NODE HERE */}
-          <FilterNode />
-          
-          <UserStatsNode />
-          <RecentActivity />
-          {/* ... System Status Ticker */}
-        </aside>
-      </div>
-    </main>
-  );
-}
-
         {/* RIGHT COLUMN: SIDEBAR / LOGS (Occupies 4/12 units) */}
         <aside className="lg:col-span-4 space-y-8">
           
+          {/* FILTER SYSTEM: Refine grid parameters */}
+          <FilterNode />
+
           {/* PERSONAL DASHBOARD: User discovery progress */}
           <UserStatsNode />
 
@@ -111,15 +85,15 @@ export default function ExplorePage() {
           
           {/* SYSTEM STATUS TICKER: Platform metadata */}
           <div className="border-4 border-black p-6 bg-black text-white space-y-4 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.2)]">
-             <div className="flex justify-between items-center">
-               <p className="text-[8px] font-black uppercase tracking-[0.4em] opacity-40">System_Status</p>
-               <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
-             </div>
-             <p className="text-[10px] font-black italic tracking-tighter">✓ ALL_SYSTEMS_OPTIMAL</p>
-             <div className="pt-4 border-t border-white/10">
-               <p className="text-[10px] font-black italic opacity-40">LOCAL_COORD: -29.8587, 31.0218</p>
-               <p className="text-[10px] font-black italic opacity-40">UPTIME: 99.9%</p>
-             </div>
+              <div className="flex justify-between items-center">
+                <p className="text-[8px] font-black uppercase tracking-[0.4em] opacity-40">System_Status</p>
+                <span className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></span>
+              </div>
+              <p className="text-[10px] font-black italic tracking-tighter">✓ ALL_SYSTEMS_OPTIMAL</p>
+              <div className="pt-4 border-t border-white/10">
+                <p className="text-[10px] font-black italic opacity-40">LOCAL_COORD: -29.8587, 31.0218</p>
+                <p className="text-[10px] font-black italic opacity-40">UPTIME: 99.9%</p>
+              </div>
           </div>
         </aside>
 

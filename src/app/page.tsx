@@ -10,14 +10,14 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen bg-[#edeae7] text-black font-mono selection:bg-[#6082a3] selection:text-white">
-    
+      {/* HEADER SECTION */}
+     
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
       {/* CORE CONTENT NODES: 
-          Insert your Hero, Stats, and Features sections here.
+          If you have Hero, Stats, or Feature sections, 
+          ensure they are pasted here. 
       */}
-
-      {/* --- BOTTOM OF THE PAGE STARTS HERE --- */}
 
       {/* SECTION 05: STRATEGIC PARTNERS */}
       <section className="bg-white border-t-4 border-black p-12 md:p-24">
@@ -35,45 +35,45 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* SECTION 06: TECHNICAL FOOTER */}
-      <footer className="bg-black text-white p-12 md:p-24 border-t-4 border-black w-full">
+    {/* SECTION 06: TECHNICAL FOOTER */}
+      <footer className="bg-black text-white p-12 md:p-24 w-full">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-left">
           <div className="space-y-6">
             <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">
               KAI<span className="text-[#6082a3]">.</span>
             </h2>
-            <p className="text-[9px] font-bold uppercase tracking-widest opacity-40 leading-relaxed">
+            <p className="text-[9px] font-bold uppercase tracking-widest opacity-40 leading-relaxed text-white">
               KZN Partner Ecosystem // v.2026.01<br/>
               Connecting local commerce through technical innovation.
             </p>
           </div>
           
           <div className="flex flex-col gap-2">
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">Navigation</p>
-            <Link href="/explore" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">Explore_Grid</Link>
-            <Link href="/partners" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">Partners</Link>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4 text-white">Navigation</p>
+            <Link href="/explore" className="text-xs font-bold uppercase hover:text-[#6082a3] text-white">Explore_Grid</Link>
+            <Link href="/partners" className="text-xs font-bold uppercase hover:text-[#6082a3] text-white">Partners</Link>
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">Support</p>
-            <Link href="/help" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">System_Manual</Link>
-            <Link href="/contact" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">Contact</Link>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4 text-white">Support</p>
+            <Link href="/help" className="text-xs font-bold uppercase hover:text-[#6082a3] text-white">System_Manual</Link>
+            <Link href="/contact" className="text-xs font-bold uppercase hover:text-[#6082a3] text-white">Contact</Link>
           </div>
 
           <div className="flex flex-col gap-2 md:text-right">
-            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">Terminal</p>
-            <p className="text-[8px] font-bold uppercase opacity-60">© 2026 KAI_GROUP_SYSTEMS</p>
-            <p className="text-[8px] font-bold uppercase opacity-40 italic mt-1">STATUS: OPERATIONAL</p>
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4 text-white">Terminal</p>
+            <p className="text-[8px] font-bold uppercase opacity-60 text-white">© 2026 KAI_GROUP_SYSTEMS</p>
+            <p className="text-[8px] font-bold uppercase opacity-40 italic mt-1 text-white">STATUS: OPERATIONAL</p>
           </div>
         </div>
       </footer>
+   
     </main>
   );
 }
 
-// Helper components (FeatureCell, StatRow, etc.) should remain below this point.
+// --- TECHNICAL HELPER COMPONENTS ---
 
-// --- ENSURE HELPERS ARE DEFINED BELOW THIS LINE ---
 function FeatureCell({ number, title, desc }: any) { 
   return (
     <div className="p-10 space-y-4 hover:bg-white transition-all group cursor-default">

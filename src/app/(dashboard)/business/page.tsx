@@ -82,4 +82,4 @@ export default function BusinessDashboard() {
         </header>
 
         {/* SECTION 01: TECHNICAL TELEMETRY [Logic: Real-time business metrics] */}
-        <div className="grid grid-cols-1 md:grid-cols-4 border-2 border-black divide-x-2 divide-black bg
+      <div className="grid grid-cols-1 md:grid-cols-4 border-2 border-black divide-x-2 divide-black bg-white">
