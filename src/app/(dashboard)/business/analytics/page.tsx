@@ -68,3 +68,4 @@ export default function AnalyticsHub() {
           {/* AI-Powered Recommendations */}
           <div className="border-4 border-black bg-black text-white p-6 space-y-4 shadow-[10px_10px_0px_0px_rgba(96,130,163,1)]">
 <p className="text-[8px] font-black uppercase tracking-widest">Recommendation_Payload</p>
+</div> {/* Added missing closing div */}

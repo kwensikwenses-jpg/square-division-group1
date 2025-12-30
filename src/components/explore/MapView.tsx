@@ -58,4 +58,9 @@ export default function MapView({ mode }: MapViewProps) {
       <div className="absolute top-4 left-4 bg-black/80 text-white p-4 space-y-2 border-2 border-white/20 backdrop-blur-md">
         <p className="text-[9px] font-black uppercase tracking-widest">{mode}_SYSTEM_RENDER</p>
         <div className="text-[7px] font-mono opacity-60 leading-tight">
-          LAT: -29.858
+          LAT: -29.858 / LON: 31.021
+        </div>
+      </div>
+    </div>
+  );
+}

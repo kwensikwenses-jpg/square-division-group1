@@ -43,5 +43,8 @@ export default function TransportFilters() {
             <label className="text-[8px] font-black uppercase opacity-40">Price_Range</label>
             <div className="flex-1 md:w-32 h-1 bg-black/10 relative">
               <div className="absolute left-0 top-0 h-full bg-black w-2/3"></div>
-              <div className="absolute left-2/3 top-[-4px] h-3 w-1 bg-black"></div>
-            </div>
+        <div className="absolute left-2/3 top-[-4px] h-3 w-1 bg-black"></div>
+      </div>
+    </div>
+  );
+}
