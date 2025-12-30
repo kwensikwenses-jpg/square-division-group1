@@ -13,121 +13,14 @@ export default function LandingPage() {
       <Navbar />
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
-      {/* SECTION 00: THE KAI HERO (Operational Air-Lock) */}
-      <section className="bg-white border-b-4 border-black min-h-screen flex flex-col pt-20">
-        {/* Sub-Nav / Action Bar */}
-        <nav className="flex border-b-2 border-black divide-x-2 divide-black h-20">
-          <button 
-            onClick={() => setIsMenuOpen(true)}
-            type="button" 
-            className="px-10 bg-black text-white font-black uppercase text-[10px] tracking-[0.4em] hover:bg-[#6082a3] transition-all"
-          >
-            Menu_Expand
-          </button>
-          <div className="flex-1 flex items-center px-8 text-[9px] font-bold uppercase tracking-widest opacity-30 italic">
-            kzn_partner_ecosystem // v.2026.01_stable
-          </div>
-          <Link 
-            href="/explore" 
-            className="px-10 flex items-center font-black uppercase text-[10px] tracking-[0.4em] hover:bg-black hover:text-white transition-all bg-[#edeae7]"
-          >
-            Explore_Platform →
-          </Link>
-        </nav>
+      {/* CORE CONTENT NODES: 
+          Insert your Hero, Stats, and Features sections here.
+      */}
 
-        {/* Hero Content Grid */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-4 divide-x-2 divide-black">
-          <div className="md:col-span-3 p-12 md:p-24 flex flex-col justify-end border-b-2 md:border-b-0 border-black relative overflow-hidden group">
-            {/* Background Branding Node */}
-            <div className="absolute top-10 right-10 text-[15vw] font-black opacity-[0.03] select-none pointer-events-none group-hover:opacity-[0.05] transition-opacity">KZN</div>
-            
-            <h1 className="text-[18vw] font-black italic tracking-tighter uppercase leading-[0.8] mb-8 relative z-10">
-              KAI<span className="text-[#6082a3]">.</span>
-            </h1>
+      {/* --- BOTTOM OF THE PAGE STARTS HERE --- */}
 
-            <div className="flex border-2 border-black divide-x-2 divide-black w-fit bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative z-10">
-              <Link href="/register/user" className="px-10 py-5 font-black uppercase text-[11px] tracking-widest hover:bg-black hover:text-white transition-all">Sign_Up</Link>
-              <Link href="/login" className="px-10 py-5 font-black uppercase text-[11px] tracking-widest hover:bg-[#6082a3] hover:text-white transition-all">Login_Portal</Link>
-            </div>
-          </div>
-
-          {/* Right Sidebar: Context Node */}
-          <div className="bg-[#edeae7] p-12 flex flex-col justify-between italic border-t-2 md:border-t-0 border-black">
-            <div className="space-y-6">
-              <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 italic">System_Description</p>
-              <p className="text-xl font-bold uppercase leading-tight tracking-tighter">
-                Creating visual narratives that elevate local brands and connect communities through photography, data, and design.
-              </p>
-            </div>
-            <div className="pt-12 border-t border-black/20 text-[9px] font-bold uppercase opacity-60 leading-relaxed">
-              built for durban & beyond.<br/>
-              protocol: local_commerce_link.<br/>
-              status: optimal.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 01: High-Impact Telemetry */}
-      <section className="border-b-4 border-black divide-y-4 md:divide-y-0 md:flex divide-black">
-        <StatRow value="500+" label="Nodes_Mapped" bgColor="bg-[#6082a3] text-white" />
-        <StatRow value="150+" label="Active_Entities" bgColor="bg-[#edeae7]" />
-        <StatRow value="12" label="Market_Sectors" bgColor="bg-white" />
-      </section>
-
-      {/* SECTION 02: Detailed Features Grid */}
-      <section className="bg-white border-b-4 border-black">
-        <div className="bg-black text-white p-8 border-b-2 border-black flex justify-between items-center">
-          <h2 className="text-xs font-black uppercase tracking-[0.4em]">Grid_Capabilities</h2>
-          <span className="text-[8px] opacity-40 uppercase">Module_02 // Features</span>
-        </div>
-        
-        {/* User Stream */}
-        <div className="bg-[#2a2d30] text-white p-6 border-b-2 border-black">
-          <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 italic">Path_Alpha: Consumer_Tools</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 divide-y-2 md:divide-y-0 md:divide-x-2 divide-black bg-[#edeae7]">
-          <FeatureCell number="1" title="Discovery_Engine" desc="Locate high-value nodes quickly via our technical map interface." />
-          <FeatureCell number="2" title="Data_Verification" desc="Access authentic community logs and verified experience nodes." />
-          <FeatureCell number="3" title="Secure_Comm" desc="Direct encrypted messaging with local business entities." />
-          <FeatureCell number="4" title="Personal_Vault" desc="Archive your favorite nodes and route history for instant recall." />
-        </div>
-
-        {/* Business Stream */}
-        <div className="bg-[#2a2d30] text-white p-6 border-t-2 border-b-2 border-black">
-          <p className="text-[10px] font-bold uppercase tracking-widest opacity-60 italic">Path_Beta: Business_Operations</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 divide-y-2 md:divide-y-0 md:divide-x-2 divide-black bg-[#edeae7]">
-          <FeatureCell number="1" title="Entity_Profile" desc="High-fidelity digital footprint for your business services." />
-          <FeatureCell number="2" title="Market_Analytics" desc="Track engagement metrics with enterprise-grade radar charts." />
-          <FeatureCell number="3" title="Lead_Triage" desc="Centralized management for inbound inquiries and bookings." />
-          <FeatureCell number="4" title="Promo_Blast" desc="Trigger time-sensitive deals to local users in real-time." />
-        </div>
-      </section>
-
-      {/* SECTION 03: Operational Process */}
-      <section className="p-12 md:p-24 space-y-12 bg-[#edeae7] border-b-4 border-black">
-        <h2 className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 text-center">System_Integration_Process</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          <ProcessStep number="01" title="Initialize" desc="Create your profile node in under 120 seconds." />
-          <ProcessStep number="02" title="Sync_Grid" desc="Connect with local customers via the map overlay." />
-          <ProcessStep number="03" title="Scale_Output" desc="Utilize data insights to optimize your reach." />
-        </div>
-      </section>
-
-      {/* SECTION 04: Community Objectives */}
-      <section className="bg-white border-b-4 border-black">
-        <div className="p-12 md:p-32 max-w-5xl mx-auto space-y-20">
-          <h2 className="text-3xl font-black uppercase text-center tracking-[0.2em] italic">Building_The_Local_Network</h2>
-          <div className="grid md:grid-cols-2 gap-16">
-            <CommunityBlock title="The_Challenge" content="Local business nodes struggle with visibility in saturated digital markets while customers lack a technical discovery tool." />
-            <CommunityBlock title="The_Solution" content="A unified ecosystem where commerce and transit data intersect, allowing for seamless local discovery and growth." />
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 05: Partners & Exit Node */}
-      <section className="bg-white p-12 md:p-24">
+      {/* SECTION 05: STRATEGIC PARTNERS */}
+      <section className="bg-white border-t-4 border-black p-12 md:p-24">
         <h2 className="text-xl font-black uppercase tracking-[0.3em] mb-12 italic border-b-2 border-black pb-4">Strategic_Partners</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 border-4 border-black divide-x-2 divide-y-2 divide-black shadow-[15px_15px_0px_0px_rgba(0,0,0,1)]">
           {['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7'].map(p => (
@@ -142,17 +35,81 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <footer className="p-8 bg-black text-white text-center">
-        <p className="text-[8px] font-black uppercase tracking-[0.8em] opacity-40">© 2026 KAI_GROUP // ALL_RIGHTS_RESERVED</p>
+      {/* SECTION 06: TECHNICAL FOOTER */}
+      <footer className="bg-black text-white p-12 md:p-24 border-t-4 border-black w-full">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-left">
+          <div className="space-y-6">
+            <h2 className="text-3xl font-black italic uppercase tracking-tighter text-white">
+              KAI<span className="text-[#6082a3]">.</span>
+            </h2>
+            <p className="text-[9px] font-bold uppercase tracking-widest opacity-40 leading-relaxed">
+              KZN Partner Ecosystem // v.2026.01<br/>
+              Connecting local commerce through technical innovation.
+            </p>
+          </div>
+          
+          <div className="flex flex-col gap-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">Navigation</p>
+            <Link href="/explore" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">Explore_Grid</Link>
+            <Link href="/partners" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">Partners</Link>
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">Support</p>
+            <Link href="/help" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">System_Manual</Link>
+            <Link href="/contact" className="text-xs font-bold uppercase hover:text-[#6082a3] transition-colors text-white">Contact</Link>
+          </div>
+
+          <div className="flex flex-col gap-2 md:text-right">
+            <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 mb-4">Terminal</p>
+            <p className="text-[8px] font-bold uppercase opacity-60">© 2026 KAI_GROUP_SYSTEMS</p>
+            <p className="text-[8px] font-bold uppercase opacity-40 italic mt-1">STATUS: OPERATIONAL</p>
+          </div>
+        </div>
       </footer>
     </main>
   );
 }
 
-// --- TECHNICAL HELPERS ---
+// Helper components (FeatureCell, StatRow, etc.) should remain below this point.
+
+// --- ENSURE HELPERS ARE DEFINED BELOW THIS LINE ---
+function FeatureCell({ number, title, desc }: any) { 
+  return (
+    <div className="p-10 space-y-4 hover:bg-white transition-all group cursor-default">
+      <span className="text-6xl font-thin italic opacity-10 group-hover:opacity-100 transition-opacity text-[#6082a3]">{number}</span>
+      <h4 className="font-black uppercase text-xs tracking-widest">{title}</h4>
+      <p className="text-[11px] font-bold opacity-60 leading-relaxed uppercase">{desc}</p>
+    </div>
+  );
+}
 
 function StatRow({ value, label, bgColor }: any) {
   return (
     <div className={`flex-1 p-12 ${bgColor} border-r-4 border-black last:border-r-0 flex flex-col justify-center min-h-[300px]`}>
       <h3 className="text-8xl font-black italic tracking-tighter">{value}</h3>
-      <p className="text-xl font-
+      <p className="text-xl font-bold uppercase mt-4 tracking-tight">{label}</p>
+    </div>
+  );
+}
+
+function ProcessStep({ number, title, desc }: any) {
+  return (
+    <div className="bg-white border-4 border-black p-10 flex flex-col gap-6 group hover:bg-black hover:text-white transition-all shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
+      <span className="text-7xl font-black opacity-10 italic group-hover:opacity-20 transition-opacity">{number}</span>
+      <div>
+        <h4 className="text-2xl font-black uppercase italic mb-2 tracking-tighter">{title}</h4>
+        <p className="text-[10px] uppercase font-bold opacity-60 group-hover:text-white/60">{desc}</p>
+      </div>
+    </div>
+  );
+}
+
+function CommunityBlock({ title, content }: any) {
+  return (
+    <div className="space-y-4 border-l-4 border-black pl-8">
+      <h3 className="text-[10px] font-black uppercase tracking-[0.4em] opacity-40 italic">{title}</h3>
+      <p className="text-lg font-bold leading-tight uppercase tracking-tight">{content}</p>
+    </div>
+  );
+}
