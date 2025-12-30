@@ -28,8 +28,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#edeae7] text-black min-h-screen`}
       >
-        {/* Persistent Navbar for all public and dashboard pages */}
-        <Navbar />
+      
         
         {/* Main wrapper to ensure content starts below the fixed Navbar if necessary */}
         <div className="pt-0"> 
