@@ -3,10 +3,14 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Navbar from '@/components/Navbar';
+import MenuOverlay from '@/components/MenuOverlay'; // Added to support Navbar functionality
 import { supabase } from '@/utils/supabase';
 
 const LoginPage: React.FC = () => {
   const router = useRouter();
+  
+  // State for Mobile Menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   // Form State
   const [email, setEmail] = useState("");
@@ -19,7 +23,6 @@ const LoginPage: React.FC = () => {
     setLoading(true);
     setErrorMessage("");
 
-    // Attempt to sign in with Supabase
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -31,7 +34,6 @@ const LoginPage: React.FC = () => {
       return;
     }
 
-    // On success, redirect to the Business Dashboard
     if (data.session) {
       router.push('/business');
     }
@@ -40,8 +42,10 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen bg-[#edeae7] text-black">
-      <Navbar />
+    <main className="min-h-screen bg-[#edeae7] text-black font-mono">
+      {/* 01: HEADER & NAVIGATION - Fixed the onMenuClick build error here */}
+      <Navbar onMenuClick={() => setIsMenuOpen(true)} />
+      <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
       <div className="flex flex-col md:flex-row min-h-screen pt-20">
         
@@ -71,35 +75,47 @@ const LoginPage: React.FC = () => {
                 </div>
               )}
 
-              <input 
-                type="email" 
-                placeholder="EMAIL ADDRESS" 
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20" 
-              />
-              <input 
-                type="password" 
-                placeholder="PASSWORD" 
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20" 
-              />
+              {/* Added id, title, and htmlFor to clear accessibility "red lines" */}
+              <div className="space-y-2">
+                <label htmlFor="email-field" className="hidden">Email Address</label>
+                <input 
+                  id="email-field"
+                  type="email" 
+                  title="Enter your email address"
+                  placeholder="EMAIL ADDRESS" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20" 
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label htmlFor="password-field" className="hidden">Password</label>
+                <input 
+                  id="password-field"
+                  type="password" 
+                  title="Enter your password"
+                  placeholder="PASSWORD" 
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-transparent border-b-2 border-black py-4 text-2xl font-bold uppercase outline-none placeholder:opacity-20" 
+                />
+              </div>
             </section>
 
             <div className="space-y-4">
               <button 
                 type="submit" 
                 disabled={loading}
-                className="w-full bg-black text-[#edeae7] py-6 font-black uppercase tracking-widest hover:bg-[#6082a3] transition-colors disabled:opacity-50"
+                className="w-full bg-black text-[#edeae7] py-6 font-black uppercase tracking-widest hover:bg-[#6082a3] transition-colors disabled:opacity-50 shadow-[10px_10px_0px_0px_rgba(0,0,0,0.1)] active:translate-y-1"
               >
                 {loading ? "Authenticating..." : "Enter Dashboard"}
               </button>
               
               <p className="text-[10px] font-bold uppercase opacity-40 text-center tracking-widest">
-                Don't have an account? <a href="/register" className="underline hover:text-black">Request Access</a>
+                Don't have an account? <a href="/business/register" className="underline hover:text-black">Request Access</a>
               </p>
             </div>
           </form>
