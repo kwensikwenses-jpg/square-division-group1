@@ -48,4 +48,4 @@ export default function RegisterStep1() {
     </div> 
     /* This </div> was missing, causing the build error */
   );
-}
+} // Force build 15:52
