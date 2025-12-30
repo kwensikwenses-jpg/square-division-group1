@@ -10,7 +10,7 @@ export default function LandingPage() {
 
   return (
     <main className="min-h-screen bg-[#edeae7] text-black font-mono selection:bg-[#6082a3] selection:text-white">
-      <Navbar />
+    
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
       {/* CORE CONTENT NODES: 
