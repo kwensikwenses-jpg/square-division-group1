@@ -3,49 +3,34 @@
 @tailwind utilities;
 
 :root {
-  /* Colors */
-  --background: #edeae7;
-  --foreground: #000000;
-  --color-accent: #ff9e00; /* Swim Club Orange */
-  --color-desk: #d1d1d1;   /* Swiss 'Desk' Surface */
-  
-  /* Spacing System */
-  --spacing: 0.25rem; /* 4px base unit */
+  --background: #f5f5f5; /* Grey Desk */
+  --foreground: #333333;
+  --spacing: 0.25rem;
+  --color-accent: #ff9e00;
 }
 
-@layer base {
-  body {
-    background-color: var(--color-desk);
-    color: var(--foreground);
-    /* Monospaced font for technical/Swiss registry look */
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    -webkit-font-smoothing: antialiased;
-    
-    /* Global cursor hiding to support CustomCursor component */
-    cursor: none !important;
-  }
-
-  /* Ensure interactive elements also hide default cursor */
-  a, button, input, select, textarea {
-    cursor: none !important;
-  }
+body {
+  background-color: var(--background);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Swiss Typography */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  cursor: none !important; /* Keep CustomCursor active */
 }
 
-@layer utilities {
-  /* Marquee animation for scrolling text sections */
-  .animate-marquee {
-    display: flex;
-    width: fit-content;
-    animation: marquee 25s linear infinite;
-  }
+/* THE A4 DOCUMENT CONTAINER */
+.page-wrapper {
+  background-color: #fff;
+  max-width: 960px; /* Locked Swiss Width */
+  width: 100%;
+  padding: 2rem;
+  margin: 2rem 0;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+  position: relative;
+}
 
-  @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* Helper for A4 Document Shadows */
-  .shadow-a4 {
-    box-shadow: 0 0 80px rgba(0,0,0,0.15), 25px 25px 0px rgba(0,0,0,0.03);
-  }
+.page-wrapper:hover {
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06);
 }
