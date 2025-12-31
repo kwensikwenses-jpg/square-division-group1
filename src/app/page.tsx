@@ -12,23 +12,40 @@ export default function LandingPage() {
     <main className="min-h-screen bg-white text-black font-mono selection:bg-[#6082a3] selection:text-white relative">
       
       {/* 01: THE 3-BUTTON CONTROL UNIT (SWISS/SKEUOMORPHIC STYLE) */}
-      <div className="absolute top-10 right-10 z-[70] flex items-center">
-        <div className="flex bg-[#f0f0f0] p-[2px] rounded-lg border border-black/5 shadow-[0_4px_10px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]">
-          <button 
-            onClick={() => setIsMenuOpen(true)}
-            className="px-6 py-2 text-[9px] font-black uppercase tracking-widest border-r border-black/5 hover:bg-white/60 transition-all rounded-l-md"
-          >
-            Menu
-          </button>
-          <Link href="/business/register" className="px-6 py-2 text-[9px] font-black uppercase tracking-widest border-r border-black/5 hover:bg-white/60 transition-all">
-            Join
-          </Link>
-          <Link href="/explore" className="px-6 py-2 text-[9px] font-black uppercase tracking-widest hover:bg-white/60 transition-all rounded-r-md">
-            Explore
-          </Link>
-        </div>
-      </div>
+     {/* --- SKEUOMORPHIC NAVIGATION UNIT --- */}
+<div className="absolute top-10 right-10 z-[100] hidden md:flex items-center">
+  {/* The Outer Frame / Case */}
+  <div className="flex p-[3px] bg-[#e0e0e0] rounded-xl border border-black/5 shadow-[6px_6px_12px_rgba(0,0,0,0.1),-4px_-4px_10px_rgba(255,255,255,0.8)]">
+    
+    {/* The Inset Track */}
+    <div className="flex bg-[#dcdcdc] rounded-lg overflow-hidden divide-x divide-black/10 shadow-[inset_2px_2px_5px_rgba(0,0,0,0.05),inset_-2px_-2px_5px_rgba(255,255,255,0.5)]">
+      
+      {/* MENU BUTTON */}
+      <button 
+        onClick={() => setIsMenuOpen(true)}
+        className="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-black/50 hover:text-black hover:bg-[#f5f5f5] transition-all active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]"
+      >
+        Menu
+      </button>
 
+      {/* JOIN BUTTON */}
+      <Link 
+        href="/business/register" 
+        className="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-black/50 hover:text-black hover:bg-[#f5f5f5] transition-all active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]"
+      >
+        Join
+      </Link>
+
+      {/* EXPLORE BUTTON */}
+      <Link 
+        href="/explore" 
+        className="px-6 py-3 text-[10px] font-black uppercase tracking-widest text-black/50 hover:text-black hover:bg-[#f5f5f5] transition-all active:shadow-[inset_2px_2px_5px_rgba(0,0,0,0.2)]"
+      >
+        Explore
+      </Link>
+    </div>
+  </div>
+</div>
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
       
       {/* 02: HERO SECTION */}
