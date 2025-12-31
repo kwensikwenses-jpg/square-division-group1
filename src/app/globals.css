@@ -3,34 +3,55 @@
 @tailwind utilities;
 
 :root {
-  --background: #f5f5f5; /* Grey Desk */
-  --foreground: #333333;
-  --spacing: 0.25rem;
-  --color-accent: #ff9e00;
+  --background: #f8f8f8;
+  --foreground: #222222;
+  --swiss-blue: #0055a5;
+  --swiss-blue-dark: #004080;
 }
 
 body {
-  background-color: var(--background);
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Swiss Typography */
   margin: 0;
-  display: flex;
-  justify-content: center;
-  cursor: none !important; /* Keep CustomCursor active */
+  background-color: var(--background);
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /* Keep your custom cursor active */
+  cursor: none !important;
 }
 
-/* THE A4 DOCUMENT CONTAINER */
-.page-wrapper {
+/* THE PAGE CONTAINER */
+.page-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0;
   background-color: #fff;
-  max-width: 960px; /* Locked Swiss Width */
-  width: 100%;
-  padding: 2rem;
-  margin: 2rem 0;
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08), 0 6px 12px rgba(0, 0, 0, 0.04);
-  border-radius: 8px;
-  transition: box-shadow 0.3s ease;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
   position: relative;
+  min-height: 100vh;
 }
 
-.page-wrapper:hover {
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1), 0 8px 16px rgba(0, 0, 0, 0.06);
+/* TOP BUTTON UNIT */
+.top-buttons {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  z-index: 100;
+}
+
+.top-buttons button, .top-buttons a {
+  background-color: var(--swiss-blue);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-left: 1px solid var(--swiss-blue-dark);
+  transition: background-color 0.2s;
+  cursor: none !important;
+}
+
+.top-buttons button:first-child {
+  border-left: none;
+}
+
+.top-buttons button:hover {
+  background-color: var(--swiss-blue-dark);
 }
