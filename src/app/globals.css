@@ -6,7 +6,8 @@
   /* Colors */
   --background: #edeae7;
   --foreground: #000000;
-  --color-accent: #ff9e00; /* The Swim Club high-visibility orange */
+  --color-accent: #ff9e00; /* Swim Club Orange */
+  --color-desk: #d1d1d1;   /* Swiss 'Desk' Surface */
   
   /* Spacing System */
   --spacing: 0.25rem; /* 4px base unit */
@@ -14,16 +15,24 @@
 
 @layer base {
   body {
-    background-color: var(--background);
+    background-color: var(--color-desk);
     color: var(--foreground);
-    /* Using a monospaced font for that "technical registry" look */
+    /* Monospaced font for technical/Swiss registry look */
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     -webkit-font-smoothing: antialiased;
+    
+    /* Global cursor hiding to support CustomCursor component */
+    cursor: none !important;
+  }
+
+  /* Ensure interactive elements also hide default cursor */
+  a, button, input, select, textarea {
+    cursor: none !important;
   }
 }
 
 @layer utilities {
-  /* Custom marquee for the scrolling text we added to the landing page */
+  /* Marquee animation for scrolling text sections */
   .animate-marquee {
     display: flex;
     width: fit-content;
@@ -33,5 +42,10 @@
   @keyframes marquee {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
+  }
+
+  /* Helper for A4 Document Shadows */
+  .shadow-a4 {
+    box-shadow: 0 0 80px rgba(0,0,0,0.15), 25px 25px 0px rgba(0,0,0,0.03);
   }
 }
