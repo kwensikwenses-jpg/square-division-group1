@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen cursor-none overflow-x-hidden`}
         style={{ 
           backgroundColor: 'var(--background)',
-          // The Swiss site uses a subtle pattern on the "desk" background
+          // The Swiss site pattern on the "desk" background
           backgroundImage: 'radial-gradient(rgba(0,0,0,0.1) 1px, transparent 1px)',
           backgroundSize: '32px 32px' 
         }}
@@ -40,7 +40,7 @@ export default function RootLayout({
         <div className="relative mx-auto my-0 md:my-12 w-full max-w-[1280px] min-h-screen bg-white shadow-[0_0_80px_rgba(0,0,0,0.15),25px_25px_0px_rgba(0,0,0,0.03)] border-x border-black/5 flex flex-col">
           
           {/* THE ACCENT TOP LINE (Swiss Federal Red) */}
-          <div className="h-2 w-full bg-[#dc2626] sticky top-0 z-[60]" />
+          <div className="h-2 w-full bg-[#dc2626] sticky top-0 z-[80]" />
           
           {/* MAIN PAGE CONTENT */}
           <div className="flex-1 flex flex-col pt-0"> 
