@@ -5,193 +5,111 @@ import Link from 'next/link';
 
 export default function LandingPage() {
   return (
-    <main>
-      <header className="page-header">
-        <Link href="#about">About</Link>
-        <Link href="#join">Join</Link>
-        <Link href="#explore">Explore</Link>
-      </header>
+    <main className="relative min-h-screen bg-white text-black font-mono selection:bg-[#6082a3] selection:text-white">
+      
+      {/* 01: CONTROL UNIT - Top Right Buttons */}
+      <div className="absolute top-10 right-[30%] z-[70] flex bg-[#f0f0f0] p-[2px] border border-black/10 shadow-[0_4px_10px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]">
+        <button className="px-6 py-2 text-[9px] font-black uppercase tracking-widest border-r border-black/5 hover:bg-white/60 transition-all">
+          Menu
+        </button>
+        <Link href="/explore" className="px-6 py-2 text-[9px] font-black uppercase tracking-widest hover:bg-white/60 transition-all">
+          Explore
+        </Link>
+      </div>
 
-      <section className="hero">
-        <h1>Connecting Communities.<br />Empowering Local Business.</h1>
-        <p>Join a platform designed to elevate local businesses and connect communities through verified impact.</p>
+      {/* 02: HERO SECTION */}
+      <section className="hero pt-48 pb-32 px-12 md:px-24 border-b-4 border-black bg-white">
+        <h1 className="text-7xl md:text-[11rem] font-black italic uppercase leading-[0.8] tracking-tighter mb-16">
+          Connecting Communities.<br />Empowering Local Business.
+        </h1>
+        <p className="text-[10px] font-black uppercase tracking-[0.5em] mb-10">
+          Join a platform designed to elevate local businesses and connect communities through verified impact.
+        </p>
       </section>
 
-      <section className="cards-section container-80">
-        <div className="card">
-          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200" alt="Fatherhood" />
-          <div className="card-content">
-            <h3>Join the Movement</h3>
-            <p>Helping men on their journey to fatherhood with the most comprehensive fertility support.</p>
-            <button>Join Now</button>
+      {/* 03: CARDS SECTION (80% WIDTH) */}
+      <section className="cards-section container-80 grid grid-cols-1 md:grid-cols-2 gap-4 px-10 pt-10">
+        <div className="card bg-black text-white p-0 border-0">
+          <div className="relative aspect-square">
+            <div className="absolute inset-0 flex flex-col justify-center items-start p-8 z-10">
+              <h3 className="text-2xl font-black uppercase italic">Join the Movement</h3>
+              <p className="text-xs font-bold uppercase mt-2 opacity-70">
+                Helping men on their journey to fatherhood with the most comprehensive fertility support.
+              </p>
+            </div>
           </div>
         </div>
-        <div className="card" style={{ borderTop: '1px solid #eee' }}>
-          <img src="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200" alt="Journey" />
-          <div className="card-content">
-            <h3>Start Your Journey</h3>
-            <p>Take control of your fertility and give your future family the best start possible.</p>
-            <button>Join Now</button>
-          </div>
-        </div>
-      </section>
-
-      <section className="section1 container-80">
-        <h2>Why We Exist</h2>
-        <p>We believe in empowering local businesses and individuals through technology, trust, and verified impact. Our platform is built to scale economic inclusion and create meaningful connections between verified suppliers and community buyers.</p>
-      </section>
-
-      <section className="stats-bar container-80">
-        <div className="stat-block">
-          <h3>5K+</h3>
-          <p>Local businesses trust us</p>
-        </div>
-        <div className="stat-block">
-          <h3>50K+</h3>
-          <p>Community members active</p>
-        </div>
-        <div className="stat-block">
-          <h3>100K+</h3>
-          <p>Meaningful interactions</p>
-        </div>
-      </section>
-
-      <section className="features container-80">
-        <div className="column">
-          <h3>For Users</h3>
-          <div className="feature-row">
-            <FeatureWord 
-              word="Discover" 
-              icon="https://cdn-icons-png.flaticon.com/512/2311/2311524.png"
-              desc="Find verified local businesses tailored to your needs."
-            />
-            <FeatureWord 
-              word="Connect" 
-              icon="https://cdn-icons-png.flaticon.com/512/2311/2311524.png"
-              desc="Engage directly with trusted providers."
-            />
-            <FeatureWord 
-              word="Review" 
-              icon="https://cdn-icons-png.flaticon.com/512/2311/2311524.png"
-              desc="Share feedback with the community."
-            />
-          </div>
-        </div>
-        <div className="column">
-          <h3>For Business</h3>
-          <div className="feature-row">
-            <FeatureWord 
-              word="Verify" 
-              icon="https://cdn-icons-png.flaticon.com/512/2311/2311524.png"
-              desc="Build trust with official credentials."
-            />
-            <FeatureWord 
-              word="Promote" 
-              icon="https://cdn-icons-png.flaticon.com/512/2311/2311524.png"
-              desc="Boost visibility with campaigns."
-            />
-            <FeatureWord 
-              word="Grow" 
-              icon="https://cdn-icons-png.flaticon.com/512/2311/2311524.png"
-              desc="Scale operations with data insights."
-            />
+        <div className="card bg-black text-white p-0 border-0">
+          <div className="relative aspect-square">
+            <div className="absolute inset-0 flex flex-col justify-center items-start p-8 z-10">
+              <h3 className="text-2xl font-black uppercase italic">Start Your Journey</h3>
+              <p className="text-xs font-bold uppercase mt-2 opacity-70">
+                Take control of your fertility and give your future family the best start possible.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="how-we-help container-80">
-        <div className="help-grid">
-          <HelpCard num="1" title="Clinical Complex" desc="Complete formula supporting every parameter of health." />
-          <HelpCard num="2" title="Research Dosage" desc="Ingredients included at exact levels shown effective." />
-          <HelpCard num="3" title="Premium Source" desc="Chosen for potency and consistent quality." />
-          <HelpCard num="4" title="Tested Standards" desc="Made in FDA-registered, cGMP facilities." />
-        </div>
-        <div className="director-block">
-          <div className="video-container">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowFullScreen></iframe>
+      {/* 04: STATS SECTION (80% WIDTH) */}
+      <section className="stats-bar container-80 grid grid-cols-1 md:grid-cols-3 gap-4 px-10 py-16">
+        <StatItem value="5K+" label="Local businesses trust us" />
+        <StatItem value="50K+" label="Community members active" />
+        <StatItem value="100K+" label="Meaningful interactions" />
+      </section>
+
+      {/* 05: USER & BUSINESS SECTION (80% WIDTH) */}
+      <section className="features container-80 grid grid-cols-1 lg:grid-cols-2 gap-4 px-10">
+        <div className="column bg-black text-white p-12">
+          <h3 className="text-xl font-black uppercase mb-8 border-b border-white/20 pb-4">For Users</h3>
+          <div className="space-y-6">
+             <FeatureItem word="Discover" desc="Find verified local businesses tailored to your needs." />
+             <FeatureItem word="Connect" desc="Engage directly with trusted community providers." />
+             <FeatureItem word="Earn" desc="Get rewarded for local engagement and referrals." />
           </div>
-          <div className="director-text">
-            <h3>Formulated with the World's Leading Expert</h3>
-            <p>Our platform logic is grounded in science and clinical excellence, guided by top-tier industry advisors.</p>
+        </div>
+        <div className="column bg-black text-white p-12">
+          <h3 className="text-xl font-black uppercase mb-8 border-b border-white/20 pb-4">For Business</h3>
+          <div className="space-y-6">
+             <FeatureItem word="Verify" desc="Build trust with official business credentials." />
+             <FeatureItem word="Promote" desc="Boost visibility with targeted campaigns." />
+             <FeatureItem word="Grow" desc="Scale operations using real-time data insights." />
           </div>
         </div>
       </section>
 
-      <section className="testimonial-section container-80">
-        <div className="testimonial-grid">
-          <TestimonialCard img="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=600" quote="“The turning point in our journey.”" meta="Steve, 38 • 4 months usage" />
-          <TestimonialCard img="https://images.unsplash.com/photo-1581579438747-1dc8d17bbce4?w=600" quote="“Finally a platform that understands local needs.”" meta="Sarah, 29 • 2 months usage" />
-          <TestimonialCard img="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600" quote="“Verified impact you can actually track.”" meta="Louis, 31 • 6 months usage" />
+      {/* 06: CTA SECTION */}
+      <section className="cta-block container-80 px-10 py-24">
+        <div className="cta-buttons w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+          <button className="bg-black text-white border-4 border-black px-12 py-8 text-xl font-black uppercase hover:bg-white hover:text-black transition-colors">
+            Join Now
+          </button>
+          <button className="bg-white text-black border-4 border-black px-12 py-8 text-xl font-black uppercase hover:bg-black hover:text-white transition-colors">
+            Explore Hub
+          </button>
         </div>
       </section>
-
-      <section className="partners container-80">
-        <h3>Trusted By</h3>
-        <div className="partner-row">
-          <div className="partner"><span>Anchor Buyer</span></div>
-          <div className="partner"><span>Health Network</span></div>
-          <div className="partner"><span>Community Hub</span></div>
-          <div className="partner"><span>Verified Supplier</span></div>
-        </div>
-      </section>
-
-      <section className="cta-block container-80">
-        <div className="cta-buttons">
-          <button className="btn-join-main">Join Now</button>
-          <button className="btn-explore-main">Explore Hub</button>
-        </div>
-      </section>
-
-      <footer className="footer container-80">
-        <div className="footer-left">
-          <p style={{ marginBottom: '2rem', opacity: 0.6 }}>ACCESSIBILITY: hello@mahady.com</p>
-          <ul>
-            <li><Link href="#">About Mahady</Link></li>
-            <li><Link href="#">Partner Network</Link></li>
-            <li><Link href="#">Shop Solutions</Link></li>
-          </ul>
-        </div>
-        <div className="footer-right">
-          <p>Join our registry for the latest updates.</p>
-          <input type="email" placeholder="Your Email Address" />
-          <p style={{ fontSize: 0.75, opacity: 0.5 }}>© 2026 Mahady Global. All Rights Reserved.</p>
-        </div>
-      </footer>
     </main>
   );
 }
 
-// --- Internal Components to keep code clean ---
-function FeatureWord({ word, icon, desc }: any) {
+/* HELPER COMPONENTS */
+function StatItem({ value, label }: { value: string; label: string }) {
   return (
-    <div className="feature-word">{word}
-      <div className="feature-card">
-        <img src={icon} alt="icon" />
-        <h4>{word}</h4>
-        <p>{desc}</p>
-      </div>
+    <div className="stat-block bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+      <h3 className="text-5xl font-black italic">{value}</h3>
+      <p className="text-xs font-bold uppercase mt-4 tracking-wider">{label}</p>
     </div>
   );
 }
 
-function HelpCard({ num, title, desc }: any) {
+function FeatureItem({ word, desc }: { word: string; desc: string }) {
   return (
-    <div className="help-card">
-      <div className="card-number">{num}</div>
-      <h4>{title}</h4>
-      <p>{desc}</p>
-    </div>
-  );
-}
-
-function TestimonialCard({ img, quote, meta }: any) {
-  return (
-    <div className="testimonial-card">
-      <img src={img} alt="Testimonial" />
-      <div className="testimonial-content">
-        <p className="quote">{quote}</p>
-        <p className="meta">{meta}</p>
-      </div>
+    <div className="group cursor-default">
+      <h4 className="text-lg font-black uppercase tracking-tighter group-hover:text-[#6082a3] transition-colors">
+        {word} →
+      </h4>
+      <p className="text-[10px] uppercase tracking-widest opacity-50 mt-1">{desc}</p>
     </div>
   );
 }

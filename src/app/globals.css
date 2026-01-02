@@ -352,3 +352,37 @@ body {
   .help-grid, .testimonial-grid { grid-template-columns: 1fr; }
   .director-block, .features { flex-direction: column; }
 }
+
+/* src/app/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --orange: #f57c00;
+  --blue: #005bab;
+  --white: #fff;
+  --gray: #f5f5f5;
+  --font: 'Noto Sans JP', sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background-color: var(--white);
+  color: #000;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+/* 80% Content Alignment */
+.container-80 {
+  width: 80%;
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* Custom Selection Color */
+::selection {
+  background-color: #6082a3;
+  color: white;
+}
