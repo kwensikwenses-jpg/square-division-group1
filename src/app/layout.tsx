@@ -14,12 +14,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased overflow-x-hidden min-h-screen cursor-none">
+      <body className="antialiased min-h-screen cursor-none overflow-x-hidden">
         <CustomCursor />
         
         {/* BACKGROUND MEDIA CONTAINER */}
         <div className="fixed top-0 left-0 w-full h-full z-[-1] overflow-hidden">
-           {/* Background Image Overlay */}
+           {/* 70% White Overlay for readability */}
            <div className="absolute inset-0 bg-white/70 z-10" />
            <img 
             src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920" 
@@ -28,8 +28,8 @@ export default function RootLayout({
            />
         </div>
 
-        {/* A4 LEFT-ALIGNED CONTAINER */}
-        <div className="relative w-full max-w-[75%] mr-auto ml-0 bg-white min-h-screen shadow-[4px_0_8px_rgba(0,0,0,0.1),12px_0_24px_rgba(0,0,0,0.06)]">
+        {/* 75% WIDTH A4 PAGE (Left Aligned) */}
+        <div className="relative w-full max-w-[75%] mr-auto ml-0 bg-white min-h-screen shadow-[4px_0_8px_rgba(0,0,0,0.1),12px_0_24px_rgba(0,0,0,0.06)] flex flex-col">
           {children}
         </div>
       </body>
