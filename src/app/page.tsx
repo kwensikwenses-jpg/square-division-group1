@@ -1,152 +1,256 @@
 "use client";
 
-import React from 'react';
-import Link from 'next/link';
+import React, { useState, useRef } from 'react';
 
-export default function LandingPage() {
+export default function DanielIncPlatform() {
+  // --- CAROUSEL LOGIC ---
+  const slides = [
+    { name: "A Word From Our Director", desc: "We built this platform to bridge the gap between digital convenience and real-world community connection." },
+    { name: "Head of Product", desc: "Our latest update focuses on speed and reliability for local searches." }
+  ];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const changeSlide = (n: number) => {
+    setCurrentSlide((prev) => (prev + n + slides.length) % slides.length);
+  };
+
+  // --- POPUP & MODAL LOGIC ---
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [popup, setPopup] = useState({ 
+    display: 'none', 
+    top: 0, 
+    left: 0, 
+    title: '', 
+    desc: '' 
+  });
+  
+  const popupTimer = useRef<NodeJS.Timeout | null>(null);
+
+  const showPopup = (e: React.MouseEvent<HTMLDivElement>, title: string, desc: string) => {
+    if (popupTimer.current) clearTimeout(popupTimer.current);
+    const rect = e.currentTarget.getBoundingClientRect();
+    
+    setPopup({
+      display: 'block',
+      top: rect.top + window.scrollY - 100, // Adjusting offset for Brutalist feel
+      left: rect.left + window.scrollX,
+      title,
+      desc
+    });
+  };
+
+  const hidePopup = () => {
+    popupTimer.current = setTimeout(() => {
+      setPopup(prev => ({ ...prev, display: 'none' }));
+    }, 300);
+  };
+
+  const expandModal = () => {
+    setIsModalOpen(true);
+    setPopup(prev => ({ ...prev, display: 'none' }));
+  };
+
+  const closeModal = () => setIsModalOpen(false);
+
   return (
-    <main className="min-h-screen bg-[#f4f4f4] text-black font-mono selection:bg-[#FF9500] selection:text-black">
-      
-      {/* 1. NAV (Sticky Eyebrow) */}
-      <nav className="sticky top-0 z-50 bg-white border-b-2 border-black px-6 py-4 flex justify-between items-center">
-        <div className="text-2xl font-black text-[#0066cc] tracking-tighter">LOGO</div>
-        <div className="hidden md:flex gap-4 items-center">
-          <button className="px-5 py-2 border-2 border-black font-bold text-sm uppercase hover:bg-black hover:text-white transition-colors">
-            About
-          </button>
-          <button className="px-5 py-2 bg-[#0066cc] text-white border-2 border-[#0066cc] font-bold text-sm uppercase hover:bg-[#0052a3] hover:border-[#0052a3] transition-colors">
-            Join
-          </button>
-          <button className="font-bold text-sm uppercase underline decoration-2 underline-offset-4 hover:text-[#0066cc]">
-            Explore
-          </button>
-        </div>
-      </nav>
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+        * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0 !important; }
+        body { font-family: 'Courier New', Courier, monospace; background-color: #f4f4f4; color: #000; line-height: 1.4; overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { text-transform: uppercase; font-weight: 900; letter-spacing: -1px; }
+        a { text-decoration: none; color: inherit; }
+        section { border-bottom: 2px solid #000; }
 
-      {/* 2. HERO SPLIT SECTION */}
-      <section className="grid grid-cols-1 md:grid-cols-2 min-h-[70vh] border-b-2 border-black bg-white">
-        {/* Left: Content */}
-        <div className="flex flex-col justify-center p-10 md:p-16 border-b-2 md:border-b-0 md:border-r-2 border-black">
-          <h1 className="text-5xl md:text-6xl font-black leading-[1.1] mb-6 uppercase tracking-tight">
-            Connecting Communities.<br />
-            Empowering Local Business.
-          </h1>
-          <p className="text-lg md:text-xl mb-8 opacity-80 leading-relaxed max-w-lg">
-            We bridge the gap between local businesses and community members, creating meaningful connections that drive growth.
-          </p>
-          <div>
-            <a href="#" className="inline-block px-10 py-5 border-2 border-black bg-white font-black text-lg uppercase hover:bg-black hover:text-white transition-all">
-              Explore Now
-            </a>
-          </div>
-        </div>
-        {/* Right: Visual Placeholder */}
-        <div className="bg-[#e0e0e0] relative min-h-[300px] md:min-h-auto flex items-center justify-center">
-           <span className="font-black opacity-20 text-4xl uppercase">Image Placeholder</span>
-        </div>
-      </section>
+        #eyebrow { background: #fff; border-bottom: 1px solid #ddd; padding: 8px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; }
+        .hero-split { display: grid; grid-template-columns: 1fr 1fr; min-height: 60vh; background: #fff; }
+        .hero-half { padding: 60px 40px; display: flex; flex-direction: column; justify-content: center; border-right: 2px solid #000; position: relative; overflow: hidden; }
+        .hero-half:last-child { border-right: none; background: #f0f0f0; }
+        .hero-img-placeholder { position: absolute; top:0; left:0; width: 100%; height: 100%; background: #ccc; opacity: 0.2; z-index: 0; }
+        .hero-content { position: relative; z-index: 2; }
+        .hero-btn { display: inline-block; margin-top: 20px; padding: 15px 30px; border: 2px solid #000; font-weight: bold; background: #fff; transition: 0.2s; cursor: pointer; }
+        .hero-btn:hover { background: #000; color: #fff; }
 
-      {/* 3. PATH CARDS (Split Layout) */}
-      <section className="grid grid-cols-1 md:grid-cols-2 border-b-2 border-black">
-        {/* For Users */}
-        <div className="relative h-[500px] border-b-2 md:border-b-0 md:border-r-2 border-black group overflow-hidden bg-[#555]">
-          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all z-10" />
-          {/* Add <img /> here later */}
-          <div className="relative z-20 h-full flex flex-col items-center justify-center text-center p-10 text-white">
-            <h2 className="text-4xl font-black uppercase mb-4">For Users</h2>
-            <p className="max-w-xs mx-auto mb-8 font-bold leading-relaxed">
-              Discover local businesses, exclusive deals, and connect with your community.
-            </p>
-            <button className="px-8 py-4 border-2 border-white bg-white text-black font-black uppercase hover:bg-[#0066cc] hover:text-white hover:border-[#0066cc] transition-all">
-              Join as User
-            </button>
-          </div>
+        .stats-section { background: #ff9d00; padding: 40px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .stat-card { padding: 30px; border: 2px solid #000; background: #fff; box-shadow: 5px 5px 0 #000; }
+        .stat-number { font-size: 4rem; font-weight: 900; line-height: 1; margin-bottom: 10px; }
+
+        .video-section { display: flex; background: #000; color: #fff; min-height: 450px; flex-wrap: wrap; }
+        .video-player-container { flex: 3; min-width: 300px; position: relative; background: #111; display: flex; align-items: center; justify-content: center; border-right: 1px solid #333; }
+        .video-placeholder { width: 100%; height: 100%; background: #222; display: flex; align-items: center; justify-content: center; font-size: 40px; }
+        .video-desc-box { flex: 2; min-width: 250px; padding: 40px; display: flex; flex-direction: column; justify-content: center; }
+        .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: #000; color: #fff; border: 1px solid #fff; padding: 15px; cursor: pointer; z-index: 10; }
+        .nav-arrow:hover { background: #fff; color: #000; }
+
+        .help-section { padding: 60px 40px; background: #fff; }
+        .help-list { margin-top: 20px; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .help-list li { border: 1px solid #000; padding: 15px; }
+        .help-list li::before { content: "■ "; color: #ff9d00; }
+
+        .how-it-works { padding: 60px 40px; background: #f9f9f9; }
+        .steps-container { display: flex; margin-top: 30px; border: 2px solid #000; }
+        .step-item { flex: 1; padding: 30px; border-right: 2px solid #000; }
+        .step-num { font-size: 3rem; font-weight: 900; opacity: 0.2; display: block; margin-bottom: 10px; }
+
+        .features-area { padding: 60px 40px; background: #fff; }
+        .flex-grid-container { display: flex; flex-wrap: wrap; border: 2px solid #000; margin-top: 20px; }
+        .feature-block { flex: 1 1 50%; min-width: 300px; }
+        .feature-block-header { background: #000; color: #fff; padding: 15px 20px; border-bottom: 2px solid #000; border-right: 2px solid #000; }
+        .feature-card { flex: 1; min-width: 150px; background: #e0e0e0; padding: 20px; border-right: 1px solid #000; border-bottom: 1px solid #000; transition: 0.2s; height: 150px; }
+        .feature-card:hover { background: #ffcc00; color: #000; }
+        .feature-card h4 { font-size: 1.5rem; opacity: 0.4; }
+
+        .interactive-blue { background: linear-gradient(180deg, #4a76a8 0%, #2a4e78 100%); color: white; padding: 80px 40px; position: relative; }
+        .blue-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+        .feature-tag-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+        .tag { border: 1px solid rgba(255,255,255,0.4); padding: 8px 15px; cursor: pointer; position: relative; font-size: 13px; }
+        .tag:hover { background: #fff; color: #2a4e78; }
+        .tag.soon { color: #aaa; border-color: #666; cursor: not-allowed; opacity: 0.6; }
+
+        .feature-popup { position: absolute; background: #fff; color: #000; padding: 20px; width: 250px; border: 2px solid #000; z-index: 100; box-shadow: 10px 10px 0px #000; }
+        .expanded-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .modal-content { background: #fff; width: 100%; max-width: 600px; padding: 40px; position: relative; color: #000; border: 2px solid #000; box-shadow: 20px 20px 0 #000; }
+        .close-btn { position: absolute; top: 0; right: 0; cursor: pointer; font-weight: bold; border-left: 2px solid #000; border-bottom: 2px solid #000; padding: 10px 15px; background: #ffcc00; }
+
+        .testimony { padding: 80px 40px; background: #fff; text-align: center; }
+        .testimony-container { max-width: 800px; margin: 40px auto 0; border: 2px solid #000; padding: 20px; }
+        .testimony-media { width: 100%; height: 400px; background: #ddd; display: flex; align-items: center; justify-content: center; border: 1px solid #000; margin-bottom: 20px; }
+
+        .partners-section { padding: 40px; background: #fff; }
+        .partners-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); border: 2px solid #000; background: #000; gap: 1px; }
+        .partner-box { background: #fff; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; transition: 0.2s; }
+
+        .cta-yellow { background: #ffcc00; padding: 50px 40px; text-align: center; border-top: 2px solid #000; }
+        .cta-buttons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .cta-btn-main { padding: 15px 30px; border: 2px solid #000; background: #000; color: #ffcc00; font-weight: bold; }
+        .cta-btn-sec { padding: 15px 30px; border: 2px solid #000; background: transparent; color: #000; font-weight: bold; }
+
+        .footer-main { background: #000; color: #fff; padding: 60px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
+      `}} />
+
+      <main>
+        {/* --- 1. EYEBROW --- */}
+        <div id="eyebrow">
+          <a className="eyebrow-left" href="#">
+            <svg width="12" height="12"><rect width="12" height="12" fill="#3083FD"/></svg>
+            <span>Connecting communities & empowering local businesses.</span>
+          </a>
+          <ul className="eyebrow-right" style={{ listStyle: 'none', display: 'flex', gap: '15px' }}>
+            <li><a href="#">Set as Home</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
         </div>
 
-        {/* For Business */}
-        <div className="relative h-[500px] group overflow-hidden bg-[#777]">
-           <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all z-10" />
-           <div className="relative z-20 h-full flex flex-col items-center justify-center text-center p-10 text-white">
-            <h2 className="text-4xl font-black uppercase mb-4">For Business</h2>
-            <p className="max-w-xs mx-auto mb-8 font-bold leading-relaxed">
-              Reach more customers, showcase your services, and grow your presence.
-            </p>
-            <button className="px-8 py-4 border-2 border-white bg-white text-black font-black uppercase hover:bg-[#0066cc] hover:text-white hover:border-[#0066cc] transition-all">
-              Join as Business
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. ORANGE STATS BLOCKS */}
-      <section className="bg-[#FF9500] border-b-2 border-black">
-        <div className="grid grid-cols-1 md:grid-cols-3 divide-y-2 md:divide-y-0 md:divide-x-2 divide-white">
-          <StatBlock num="5K+" text="Local businesses trust our platform" />
-          <StatBlock num="50K+" text="Active community members" />
-          <StatBlock num="100K+" text="Meaningful interactions created" />
-        </div>
-      </section>
-
-      {/* 5. VIDEO SECTION */}
-      <section className="flex flex-col md:flex-row bg-[#1a1a1a] text-white border-b-2 border-black min-h-[500px]">
-        {/* Video Player Side */}
-        <div className="flex-1 bg-black border-b-2 md:border-b-0 md:border-r-2 border-[#333] flex items-center justify-center relative min-h-[300px]">
-           <div className="text-6xl text-white opacity-80">▶</div>
-        </div>
-        {/* Description Side */}
-        <div className="flex-1 p-10 md:p-20 flex flex-col justify-center">
-          <h2 className="text-3xl md:text-4xl font-black uppercase leading-tight mb-8">
-            Built by Community Experts, For Community Growth
-          </h2>
-          <div className="space-y-4 text-sm font-bold uppercase tracking-widest opacity-80 border-l-2 border-white pl-4">
-            <p>• 100+ Local Business Owners</p>
-            <p>• Community Development Specialists</p>
-            <p>• Technology Innovation Partners</p>
-          </div>
-          <p className="mt-10 italic opacity-60">"Together, we're creating the future of local commerce."</p>
-        </div>
-      </section>
-
-      {/* 6. PIXELATED FOOTER */}
-      <footer className="bg-[#e5e5e5] p-10 md:p-16 border-t-2 border-black">
-        <span className="block text-5xl md:text-6xl font-black tracking-tighter mb-10">COMMUNITY</span>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 border-b-2 border-black pb-10 mb-10">
-          <p className="text-lg font-bold leading-relaxed max-w-md">
-            Connecting communities and empowering local businesses since 2024. 
-            We believe in the power of local commerce.
-          </p>
-          <div>
-            <h4 className="font-black uppercase mb-4">Stay Updated</h4>
-            <div className="flex gap-2">
-              <input type="email" placeholder="EMAIL" className="flex-1 p-3 border-2 border-black bg-white font-bold uppercase placeholder:text-gray-400" />
-              <button className="bg-black text-white px-6 py-3 font-black uppercase border-2 border-black hover:bg-gray-800 transition-colors">
-                Subscribe
-              </button>
+        {/* --- 2. HERO --- */}
+        <section className="hero-split">
+          <div className="hero-half">
+            <div className="hero-img-placeholder"></div> 
+            <div className="hero-content">
+              <h1>Find Local Businesses</h1>
+              <p>Discover hidden gems and trusted services in your community right now.</p>
+              <div className="hero-btn">EXPLORE NOW</div>
             </div>
           </div>
-        </div>
+          <div className="hero-half">
+            <div className="hero-img-placeholder" style={{ background: '#aaa' }}></div>
+            <div className="hero-content">
+              <h1>List Your Business</h1>
+              <p>Reach more local customers and grow your presence effortlessly.</p>
+              <div className="hero-btn" style={{ background: '#000', color: '#fff' }}>GET LISTED</div>
+            </div>
+          </div>
+        </section>
 
-        <div className="flex flex-col md:flex-row justify-between text-xs font-black uppercase opacity-60 gap-4">
-          <p>&copy; 2024 Community Hub. All rights reserved.</p>
-          <div className="flex gap-6 underline decoration-2">
-            <a href="#">Privacy</a>
-            <a href="#">Terms</a>
-            <a href="#">Contact</a>
+        {/* --- 3. STATS --- */}
+        <section className="stats-section">
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-number">150k+</div>
+              <p>Local connections made this month.</p>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">85%</div>
+              <p>Of businesses reported increased foot traffic.</p>
+            </div>
+            <div className="stat-card">
+              <div className="stat-number">500+</div>
+              <p>Cities currently active on the platform.</p>
+            </div>
+          </div>
+        </section>
+
+        {/* --- 4. VIDEO CAROUSEL --- */}
+        <section className="video-section">
+          <div className="video-player-container">
+            <button className="nav-arrow" style={{ left: 0 }} onClick={() => changeSlide(-1)}>&#8249;</button>
+            <div className="video-placeholder">▶ {slides[currentSlide].name}</div>
+            <button className="nav-arrow" style={{ right: 0 }} onClick={() => changeSlide(1)}>&#8250;</button>
+          </div>
+          <div className="video-desc-box">
+            <h3>{slides[currentSlide].name}</h3>
+            <p>{slides[currentSlide].desc}</p>
+            <p style={{ marginTop: '20px', opacity: 0.6 }}>Jane Doe / CEO</p>
+          </div>
+        </section>
+
+        {/* --- 8. INTERACTIVE BLUE BLOCK --- */}
+        <section className="interactive-blue">
+          <div className="blue-grid">
+            <div>
+              <h2>Explore Tools</h2>
+              <div className="feature-tag-list">
+                <div className="tag" 
+                     onMouseEnter={(e) => showPopup(e, 'Smart Search', 'AI-driven search results.')} 
+                     onMouseLeave={hidePopup}>Smart Search</div>
+                <div className="tag" 
+                     onMouseEnter={(e) => showPopup(e, 'Price Compare', 'Compare service quotes.')} 
+                     onMouseLeave={hidePopup}>Price Compare</div>
+                <div className="tag soon">AI Assistant</div>
+              </div>
+            </div>
+          </div>
+
+          {/* DYNAMIC POPUP */}
+          <div className="feature-popup" style={{ 
+            display: popup.display, 
+            top: popup.top, 
+            left: popup.left 
+          }}
+          onMouseEnter={() => { if (popupTimer.current) clearTimeout(popupTimer.current); }}
+          onMouseLeave={hidePopup}>
+            <strong>{popup.title}</strong>
+            <p style={{ fontSize: '11px', marginTop: '5px' }}>{popup.desc}</p>
+            <span style={{ cursor: 'pointer', textDecoration: 'underline', color: '#0055ff', fontSize: '11px', display: 'block', marginTop: '10px' }} 
+                  onClick={expandModal}>..more</span>
+          </div>
+        </section>
+
+        {/* --- MODAL --- */}
+        {isModalOpen && (
+          <div className="expanded-modal">
+            <div className="modal-content">
+              <span className="close-btn" onClick={closeModal}>CLOSE X</span>
+              <h2>{popup.title} Detail</h2>
+              <p style={{ marginTop: '20px' }}>Detailed description of {popup.title} goes here.</p>
+            </div>
+          </div>
+        )}
+
+        {/* --- 12. FINAL CTA & FOOTER --- */}
+        <div className="cta-yellow">
+          <h2>Ready To Grow Your Community Presence?</h2>
+          <div className="cta-buttons">
+            <a href="#" className="cta-btn-main">APPLY FOR BUSINESS</a>
+            <a href="#" className="cta-btn-sec">EXPLORE FOR USERS</a>
           </div>
         </div>
-      </footer>
 
-    </main>
+        <footer className="footer-main">
+          <div><h3>+ daniel.inc</h3><p>Connecting communities.</p></div>
+          <div><strong>QUICK LINKS</strong><br/><a href="#">About Us</a></div>
+          <div><strong>SOCIAL</strong><br/>X / Instagram</div>
+        </footer>
+      </main>
+    </>
   );
-}
-
-// Sub-Component for Stats
-function StatBlock({ num, text }: { num: string, text: string }) {
-  return (
-    <div className="p-10 md:p-16 text-center flex flex-col justify-center items-center">
-      <div className="text-6xl md:text-7xl font-black mb-4 font-mono">{num}</div>
-      <p className="font-bold uppercase leading-tight max-w-[200px]">{text}</p>
-    </div>
-  );
-}
+} 
