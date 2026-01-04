@@ -2,65 +2,77 @@
 
 import React from 'react';
 
-export default function RegisterStep1({ data, updateFields, onNext }: any) {
-  return (
-    <div className="w-full max-w-2xl border-4 border-black bg-white shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] font-mono animate-in fade-in duration-500">
-      <div className="border-b-4 border-black p-6 bg-black text-white flex justify-between items-center">
-        <div className="space-y-1">
-          <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Step_01/03</p>
-          <h2 className="text-xl font-black italic uppercase">Basic_Information</h2>
-        </div>
-        <div className="h-8 w-8 rounded-full border-2 border-white flex items-center justify-center font-black text-xs">
-          01
-        </div>
-      </div>
-
-      <div className="p-10 space-y-8">
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <label htmlFor="businessName" className="text-xs font-black uppercase tracking-widest">Legal_Entity_Name</label>
-            <input 
-              id="businessName"
-              type="text" 
-              value={data.businessName}
-              onChange={(e) => updateFields({ businessName: e.target.value })}
-              placeholder="ENTER_NAME..." 
-              className="w-full border-4 border-black p-4 text-sm font-bold uppercase focus:bg-[#edeae7] outline-none transition-colors"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="industrySector" className="text-xs font-black uppercase tracking-widest">Industry_Sector</label>
-            <select 
-              id="industrySector"
-              title="Select Industry Sector"
-              value={data.sector}
-              onChange={(e) => updateFields({ sector: e.target.value })}
-              className="w-full border-4 border-black p-4 text-sm font-bold uppercase appearance-none bg-white outline-none"
-            >
-              <option value="RETAIL">RETAIL</option>
-              <option value="FOOD_&_BEVERAGE">FOOD_&_BEVERAGE</option>
-              <option value="TECHNOLOGY">TECHNOLOGY</option>
-              <option value="HEALTHCARE">HEALTHCARE</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="pt-4">
-            <p className="text-[9px] font-bold opacity-40 uppercase leading-relaxed">
-              By proceeding, you agree to the KAI_GRID technical protocols and data synchronization terms.
-            </p>
-          </div>
-
-          <button 
-            onClick={onNext}
-            className="w-full bg-black text-white p-6 text-xl font-black italic uppercase hover:bg-[#6082a3] transition-all"
-          >
-            Initialize_Protocol →
-          </button>
-        </div>
-      </div>
-    </div> 
-  );
+// Explicit Interface to stop the "undefined" red lines
+interface Step1Props {
+  data: {
+    businessName: string;
+    bizType: string;
+    registrationNumber: string;
+    category: string;
+  };
+  updateFields: (fields: Partial<Step1Props['data']>) => void;
+  onNext: () => void;
 }
+
+const RegisterStep1: React.FC<Step1Props> = ({ data, updateFields, onNext }) => {
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
+      <h2 className="text-3xl font-black italic uppercase tracking-tighter">Business Details</h2>
+      
+      <div className="border-2 border-black p-8 space-y-6 bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+        
+        {/* Trading Name */}
+        <div className="space-y-2">
+          <p className="text-[10px] font-black uppercase opacity-40">Trading Name</p>
+          <input 
+            className="w-full bg-transparent border-b-2 border-black py-3 text-xl font-bold uppercase outline-none focus:border-orange-500"
+            placeholder="ENTER BUSINESS NAME"
+            value={data.businessName || ""}
+            onChange={(e) => updateFields({ businessName: e.target.value })}
+          />
+        </div>
+
+        {/* Business Structure */}
+        <div className="space-y-4 py-4 border-y border-black/10">
+          <p className="text-[10px] font-black uppercase opacity-40">Business Structure</p>
+          <div className="flex flex-col gap-4">
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input type="radio" checked={data.bizType === 'sole'} onChange={() => updateFields({ bizType: 'sole' })} className="w-5 h-5 accent-black" />
+              <span className="text-sm font-bold uppercase">Sole Proprietor / Informal</span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer">
+              <input type="radio" checked={data.bizType === 'company'} onChange={() => updateFields({ bizType: 'company' })} className="w-5 h-5 accent-black" />
+              <span className="text-sm font-bold uppercase">Private Company / Formal</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Industry Category */}
+        <div className="space-y-2">
+          <p className="text-[10px] font-black uppercase opacity-40">Industry Sector</p>
+          <div className="relative">
+           <select 
+  className="w-full bg-transparent ..."
+  aria-label="Industry Sector"
+  // FIXED: Adding '|| ""' ensures the value is never undefined
+  value={data.category || ""} 
+  onChange={(e) => updateFields({ category: e.target.value })}
+>
+              <option value="" disabled>SELECT CATEGORY</option>
+              <option value="auto">MECHANIC / AUTO REPAIR</option>
+              <option value="food">FOOD & BEVERAGE</option>
+              <option value="tech">TECHNOLOGY</option>
+            </select>
+            <span className="absolute right-0 top-3 pointer-events-none text-2xl font-black italic">↓</span>
+          </div>
+        </div>
+      </div>
+
+      <button onClick={onNext} className="w-full bg-black text-white p-6 font-black uppercase italic hover:bg-orange-600 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
+        Continue to Security →
+      </button>
+    </div>
+  );
+};
+
+export default RegisterStep1;

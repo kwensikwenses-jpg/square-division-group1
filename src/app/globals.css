@@ -7,10 +7,9 @@
 :root {
   --orange: #f57c00;
   --blue: #005bab;
-  --white: #fff;
-  --gray: #f5f5f5;
-  /* Ensure these fonts are imported in your layout.tsx */
-  --font: 'Noto Sans JP', sans-serif;
+  --white: #f4f4f4; /* Brutalist gray-white to match layout.tsx base */
+  --gray: #e0e0e0;
+  --font: 'Courier New', Courier, monospace;
 }
 
 /* 02: GLOBAL BRUTALIST RESET */
@@ -31,133 +30,43 @@ body {
   line-height: 1.4;
 }
 
-/* Custom Selection Color */
+/* Custom Selection Color forkai_demo */
 ::selection {
   background-color: #6082a3;
   color: white;
 }
 
-/* 03: LAYOUT UTILITIES (80% Content / 20% Negative Space) */
+/* 03: LAYOUT UTILITIES */
+/* 80% Content / 20% Negative Space design language */
 .container-80 {
   width: 80%;
   margin-left: 0;
   margin-right: auto;
 }
 
-/* 04: NAVIGATION & HEADER */
-.page-header {
-  display: flex;
-  justify-content: flex-end;
-  background-color: var(--orange);
-  padding: 1rem 2rem;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  border-bottom: 2px solid #000;
-}
-
-.page-header a {
-  color: var(--white);
-  text-decoration: none;
-  margin-left: 2rem;
-  font-weight: bold;
-  font-size: 1rem;
-  text-transform: uppercase;
-}
-
-/* 05: HERO SECTION */
-.hero {
-  text-align: center;
-  padding: 6rem 2rem;
-}
-
-.hero h1 {
-  font-size: clamp(2.5rem, 8vw, 4.5rem); /* Responsive sizing */
-  margin-bottom: 1rem;
-  letter-spacing: -2px;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-/* 06: STATS SECTION (High Impact) */
-.stats-bar {
-  background-color: var(--orange);
-  color: #000;
-  display: flex;
-  justify-content: space-between;
-  padding: 4rem 3rem;
-  border-top: 2px solid #000;
-  border-bottom: 2px solid #000;
-}
-
-.stat-block h3 {
-  font-size: 4.5rem;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: 900;
-  margin-bottom: 0.5rem;
-}
-
-/* 07: FEATURES (Interactive Pills) */
-.feature-word {
-  position: relative;
-  font-size: 1rem;
-  font-weight: bold;
-  padding: 0.75rem 1.25rem;
-  background-color: var(--gray);
-  border: 1px solid #000;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.feature-word:hover {
-  background-color: #e0e0e0;
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0px #000;
-}
-
-.feature-card {
-  position: absolute;
-  top: -220px;
-  left: 0;
-  width: 280px;
-  background-color: var(--white);
-  border: 2px solid #000;
-  box-shadow: 10px 10px 0px rgba(0,0,0,1);
-  padding: 1.5rem;
-  z-index: 100;
-  display: none;
-}
-
-.feature-word:hover .feature-card {
-  display: block;
-}
-
-/* 08: VIDEO & DIRECTOR BLOCK */
-.director-block {
-  display: flex;
-  background-color: var(--gray);
+/* 04: BRUTALIST COMPONENTS */
+.brutalist-border {
   border: 2px solid #000;
 }
 
-/* 09: FOOTER */
-.footer {
-  padding: 6rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  background-color: var(--gray);
-  border-top: 2px solid #000;
+.brutalist-shadow {
+  box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
 }
 
-/* 10: RESPONSIVE OVERRIDES */
+.brutalist-input {
+  width: 100%;
+  background: transparent;
+  border-bottom: 2px solid #000;
+  padding: 12px 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  outline: none;
+}
+
+/* 05: RESPONSIVE OVERRIDES */
 @media (max-width: 1024px) {
-  .container-80, .stats-bar, .features, .how-we-help, .partners, .cta-block, .footer {
+  .container-80 {
     width: 100%;
-  }
-  .stats-bar {
-    flex-direction: column;
-    gap: 2rem;
-  }
-  .director-block {
-    flex-direction: column;
+    padding: 0 20px;
   }
 }

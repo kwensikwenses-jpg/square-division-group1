@@ -1,63 +1,34 @@
-"use client";
-import React from 'react';
-import Navbar from '../../components/Navbar';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import type { Metadata } from "next";
+import "./globals.css";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+// Metadata configuration for Next.js
+export const metadata: Metadata = {
+  title: "daniel.inc | Platform Upgrade",
+  description: "Connecting communities & empowering local businesses.",
+};
 
-  const menuItems = [
-  { name: 'Overview', path: '/business' },
-  { name: 'Analytics', path: '/business/stats' }, // New Link
-  { name: 'Marketplace', path: '/business/marketplace' },
-  { name: 'Messages', path: '/business/messages' },
-  { name: 'Profile Editor', path: '/business/profile' },
-];
-
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <main className="min-h-screen bg-[#edeae7] text-black">
-      
-      <div className="flex pt-20 h-screen">
-        {/* SHARED SIDEBAR */}
-        <aside className="w-64 border-r border-black p-8 hidden md:flex flex-col justify-between h-full">
-          <nav className="space-y-12">
-            <div className="space-y-4">
-              <p className="text-[10px] font-bold opacity-40 uppercase tracking-[0.3em]">Business Hub</p>
-              <ul className="space-y-6">
-                {menuItems.map((item) => (
-                  <li key={item.path}>
-                    <Link 
-                      href={item.path}
-                      className={`text-xs font-black uppercase tracking-tighter hover:italic transition-all ${
-                        pathname === item.path ? 'underline decoration-2 underline-offset-4' : 'opacity-60'
-                      }`}
-                    >
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+    <html lang="en">
+      <body className="antialiased overflow-x-hidden min-h-screen">
+        
+        {/* BACKGROUND MEDIA CONTAINER */}
+        <div className="fixed top-0 left-0 w-full h-full z-[-1] overflow-hidden">
+           {/* Background Overlay: 70% white for text readability */}
+           <div className="absolute inset-0 bg-white/70 z-10" />
+           
+           {/* Brutalist Background Base Color */}
+           <div className="w-full h-full bg-[#f4f4f4]" />
+        </div>
 
-            <div className="p-4 border border-black bg-white">
-               <p className="text-[10px] font-bold uppercase mb-1">Tier Status</p>
-               <p className="text-xl font-black italic uppercase text-[#6082a3]">Gold</p>
-            </div>
-          </nav>
-          
-          <div className="border-t border-black pt-6">
-            <button className="text-[10px] font-bold uppercase tracking-widest hover:text-red-500 transition-colors">
-              Sign Out — Log 01
-            </button>
-          </div>
-        </aside>
-
-        {/* DYNAMIC CONTENT AREA */}
-        <section className="flex-1 overflow-y-auto p-8 md:p-12">
-          {children}
-        </section>
-      </div>
-    </main>
+        {/* MAIN CONTENT AREA */}
+        {children}
+        
+      </body>
+    </html>
   );
 }
