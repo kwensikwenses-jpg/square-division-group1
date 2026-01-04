@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 
 // Metadata configuration for Next.js
 export const metadata: Metadata = {
