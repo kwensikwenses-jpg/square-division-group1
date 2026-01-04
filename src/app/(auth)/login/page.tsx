@@ -26,6 +26,20 @@ const LoginPage: React.FC = () => {
     e.preventDefault();
     if (isLocked) return;
 
+    const remaining = attempts - 1;
+
+    if (remaining <= 0) {
+  setIsLocked(true);
+  setErrorMessage("NODE LOCKDOWN: MAXIMUM ATTEMPTS EXCEEDED.");
+
+  // TRIGGER THE RECOVERY EMAIL PROTOCOL
+  await fetch('/api/verify/recovery', {
+    method: 'POST',
+    body: JSON.stringify({ email: email }),
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
+
     setLoading(true);
     setErrorMessage("");
 
@@ -35,7 +49,6 @@ const LoginPage: React.FC = () => {
     });
 
     if (error) {
-      const remaining = attempts - 1;
       setAttempts(remaining);
 
       if (remaining <= 0) {
