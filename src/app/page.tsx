@@ -5,111 +5,124 @@ import Link from 'next/link';
 
 export default function LandingPage() {
   return (
-    <main className="relative min-h-screen bg-white text-black font-mono selection:bg-[#6082a3] selection:text-white">
-      
-      {/* 01: CONTROL UNIT - Top Right Buttons */}
-      <div className="absolute top-10 right-[30%] z-[70] flex bg-[#f0f0f0] p-[2px] border border-black/10 shadow-[0_4px_10px_rgba(0,0,0,0.1),inset_0_1px_0_rgba(255,255,255,0.8)]">
-        <button className="px-6 py-2 text-[9px] font-black uppercase tracking-widest border-r border-black/5 hover:bg-white/60 transition-all">
-          Menu
-        </button>
-        <Link href="/explore" className="px-6 py-2 text-[9px] font-black uppercase tracking-widest hover:bg-white/60 transition-all">
-          Explore
-        </Link>
-      </div>
+    <main className="flex flex-col">
+      {/* ===== NAVIGATION ===== */}
+      <nav className="flex justify-between items-center py-5 px-10 md:px-20 border-b border-gray-100 sticky top-0 bg-white z-[50]">
+        <div className="text-2xl font-bold text-[#0066cc]">LOGO</div>
+        <div className="flex gap-4">
+          <button className="px-6 py-3 border border-black font-bold text-sm uppercase hover:bg-black hover:text-white transition-all">About</button>
+          <button className="px-6 py-3 bg-[#0066cc] text-white font-bold text-sm uppercase hover:bg-[#0052a3] transition-all">Join</button>
+          <button className="px-6 py-3 text-sm font-bold uppercase underline">Explore</button>
+        </div>
+      </nav>
 
-      {/* 02: HERO SECTION */}
-      <section className="hero pt-48 pb-32 px-12 md:px-24 border-b-4 border-black bg-white">
-        <h1 className="text-7xl md:text-[11rem] font-black italic uppercase leading-[0.8] tracking-tighter mb-16">
-          Connecting Communities.<br />Empowering Local Business.
+      {/* ===== HERO SECTION ===== */}
+      <section className="py-32 px-10 md:px-20 max-w-[65%]">
+        <h1 className="text-6xl font-bold leading-tight mb-6 tracking-tight">
+          Connecting Communities.<br />
+          Empowering Local Business.
         </h1>
-        <p className="text-[10px] font-black uppercase tracking-[0.5em] mb-10">
-          Join a platform designed to elevate local businesses and connect communities through verified impact.
+        <p className="text-xl text-gray-600 leading-relaxed">
+          We bridge the gap between local businesses and community members, 
+          creating meaningful connections that drive growth and prosperity for everyone.
         </p>
       </section>
 
-      {/* 03: CARDS SECTION (80% WIDTH) */}
-      <section className="cards-section container-80 grid grid-cols-1 md:grid-cols-2 gap-4 px-10 pt-10">
-        <div className="card bg-black text-white p-0 border-0">
-          <div className="relative aspect-square">
-            <div className="absolute inset-0 flex flex-col justify-center items-start p-8 z-10">
-              <h3 className="text-2xl font-black uppercase italic">Join the Movement</h3>
-              <p className="text-xs font-bold uppercase mt-2 opacity-70">
-                Helping men on their journey to fatherhood with the most comprehensive fertility support.
-              </p>
+      {/* ===== VERTICAL PATH CARDS ===== */}
+      <section className="px-10 md:px-20 py-20 flex flex-col gap-0">
+        <PathCard 
+          title="For Users" 
+          img="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200"
+          desc="Discover local businesses, exclusive deals, and connect with your community like never before."
+          btnText="Join as User"
+        />
+        <PathCard 
+          title="For Business" 
+          img="https://images.unsplash.com/photo-1556761175-4b46a572b786?w=1200"
+          desc="Reach more customers, showcase your services, and grow your presence in the community."
+          btnText="Join as Business"
+        />
+      </section>
+
+      {/* ===== ORANGE STATS BLOCKS ===== */}
+      <section className="grid grid-cols-1 md:grid-cols-3 px-10 md:px-20 py-20">
+        <StatBlock num="5K+" text="Local businesses trust our platform to connect with customers" />
+        <StatBlock num="50K+" text="Active community members discover new businesses every month" />
+        <StatBlock num="100K+" text="Meaningful interactions created between businesses and customers" />
+      </section>
+
+      {/* ===== VIDEO DIRECTOR SECTION ===== */}
+      <section className="bg-[#1a1a1a] text-white py-24 px-10 md:px-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="aspect-video bg-black relative overflow-hidden group">
+            <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200" alt="Video" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <span className="text-6xl">▶</span>
+            </div>
+          </div>
+          <div>
+            <h2 className="text-4xl font-bold mb-8 leading-snug">Built by Community Experts, For Community Growth</h2>
+            <div className="text-gray-400 space-y-4 text-sm leading-loose uppercase tracking-widest">
+              <p>• 100+ Local Business Owners</p>
+              <p>• Community Development Specialists</p>
+              <p>• Technology Innovation Partners</p>
+              <p>• Thousands of Community Members</p>
+              <p className="mt-8 text-white italic lowercase">Together, we're creating the future of local commerce.</p>
             </div>
           </div>
         </div>
-        <div className="card bg-black text-white p-0 border-0">
-          <div className="relative aspect-square">
-            <div className="absolute inset-0 flex flex-col justify-center items-start p-8 z-10">
-              <h3 className="text-2xl font-black uppercase italic">Start Your Journey</h3>
-              <p className="text-xs font-bold uppercase mt-2 opacity-70">
-                Take control of your fertility and give your future family the best start possible.
-              </p>
+      </section>
+
+      {/* ===== PIXELATED FOOTER ===== */}
+      <footer className="bg-[#e5e5e5] p-10 md:p-20 border-t-2 border-black">
+        <div className="text-7xl font-bold font-mono tracking-tighter mb-10">COMMUNITY</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 pb-10 border-b-2 border-black">
+          <p className="text-sm leading-relaxed max-w-sm">
+            Connecting communities and empowering local businesses since 2024. 
+            We believe in the power of local commerce and community-driven growth.
+          </p>
+          <div className="space-y-4">
+            <h4 className="font-bold">Stay Updated</h4>
+            <div className="flex gap-2">
+              <input type="email" placeholder="Email" className="flex-1 p-3 border border-black bg-white" />
+              <button className="bg-black text-white px-6 font-bold">Subscribe</button>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* 04: STATS SECTION (80% WIDTH) */}
-      <section className="stats-bar container-80 grid grid-cols-1 md:grid-cols-3 gap-4 px-10 py-16">
-        <StatItem value="5K+" label="Local businesses trust us" />
-        <StatItem value="50K+" label="Community members active" />
-        <StatItem value="100K+" label="Meaningful interactions" />
-      </section>
-
-      {/* 05: USER & BUSINESS SECTION (80% WIDTH) */}
-      <section className="features container-80 grid grid-cols-1 lg:grid-cols-2 gap-4 px-10">
-        <div className="column bg-black text-white p-12">
-          <h3 className="text-xl font-black uppercase mb-8 border-b border-white/20 pb-4">For Users</h3>
-          <div className="space-y-6">
-             <FeatureItem word="Discover" desc="Find verified local businesses tailored to your needs." />
-             <FeatureItem word="Connect" desc="Engage directly with trusted community providers." />
-             <FeatureItem word="Earn" desc="Get rewarded for local engagement and referrals." />
+        <div className="pt-8 flex justify-between text-[10px] font-bold uppercase opacity-50">
+          <p>&copy; 2024 Community Hub. All rights reserved.</p>
+          <div className="flex gap-10 underline">
+            <span>Privacy</span>
+            <span>Terms</span>
+            <span>Contact</span>
           </div>
         </div>
-        <div className="column bg-black text-white p-12">
-          <h3 className="text-xl font-black uppercase mb-8 border-b border-white/20 pb-4">For Business</h3>
-          <div className="space-y-6">
-             <FeatureItem word="Verify" desc="Build trust with official business credentials." />
-             <FeatureItem word="Promote" desc="Boost visibility with targeted campaigns." />
-             <FeatureItem word="Grow" desc="Scale operations using real-time data insights." />
-          </div>
-        </div>
-      </section>
-
-      {/* 06: CTA SECTION */}
-      <section className="cta-block container-80 px-10 py-24">
-        <div className="cta-buttons w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <button className="bg-black text-white border-4 border-black px-12 py-8 text-xl font-black uppercase hover:bg-white hover:text-black transition-colors">
-            Join Now
-          </button>
-          <button className="bg-white text-black border-4 border-black px-12 py-8 text-xl font-black uppercase hover:bg-black hover:text-white transition-colors">
-            Explore Hub
-          </button>
-        </div>
-      </section>
+      </footer>
     </main>
   );
 }
 
-/* HELPER COMPONENTS */
-function StatItem({ value, label }: { value: string; label: string }) {
+// --- SUB-COMPONENTS ---
+
+function PathCard({ title, img, desc, btnText }: any) {
   return (
-    <div className="stat-block bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-      <h3 className="text-5xl font-black italic">{value}</h3>
-      <p className="text-xs font-bold uppercase mt-4 tracking-wider">{label}</p>
+    <div className="relative h-[500px] overflow-hidden group">
+      <img src={img} alt={title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-all" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-10">
+        <h3 className="text-4xl font-bold mb-4">{title}</h3>
+        <p className="max-w-md mb-8 leading-relaxed">{desc}</p>
+        <button className="px-10 py-4 bg-white text-black font-bold uppercase hover:bg-[#0066cc] hover:text-white transition-all">{btnText}</button>
+      </div>
     </div>
   );
 }
 
-function FeatureItem({ word, desc }: { word: string; desc: string }) {
+function StatBlock({ num, text }: any) {
   return (
-    <div className="group cursor-default">
-      <h4 className="text-lg font-black uppercase tracking-tighter group-hover:text-[#6082a3] transition-colors">
-        {word} →
-      </h4>
-      <p className="text-[10px] uppercase tracking-widest opacity-50 mt-1">{desc}</p>
+    <div className="bg-[#FF9500] p-16 border-r-2 border-white last:border-0 flex flex-col justify-center">
+      <div className="text-7xl font-bold font-mono mb-4">{num}</div>
+      <p className="text-sm font-medium leading-relaxed">{text}</p>
     </div>
   );
 }

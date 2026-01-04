@@ -3,30 +3,48 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 01: VARIABLES & FONTS */
 :root {
   --orange: #f57c00;
   --blue: #005bab;
   --white: #fff;
   --gray: #f5f5f5;
+  /* Ensure these fonts are imported in your layout.tsx */
   --font: 'Noto Sans JP', sans-serif;
+}
+
+/* 02: GLOBAL BRUTALIST RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* Strictly enforce sharp edges for Brutalist design */
+  border-radius: 0 !important; 
 }
 
 body {
   font-family: var(--font);
   background-color: var(--white);
-  color: #333;
+  color: #000; /* Pure black for high contrast */
   margin: 0;
   overflow-x: hidden;
+  line-height: 1.4;
 }
 
-/* Layout Utility: 80% Content / 20% Negative Space */
+/* Custom Selection Color */
+::selection {
+  background-color: #6082a3;
+  color: white;
+}
+
+/* 03: LAYOUT UTILITIES (80% Content / 20% Negative Space) */
 .container-80 {
   width: 80%;
   margin-left: 0;
   margin-right: auto;
 }
 
-/* Navigation */
+/* 04: NAVIGATION & HEADER */
 .page-header {
   display: flex;
   justify-content: flex-end;
@@ -35,6 +53,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  border-bottom: 2px solid #000;
 }
 
 .page-header a {
@@ -43,141 +62,57 @@ body {
   margin-left: 2rem;
   font-weight: bold;
   font-size: 1rem;
+  text-transform: uppercase;
 }
 
-/* Hero Section */
+/* 05: HERO SECTION */
 .hero {
   text-align: center;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
 }
 
 .hero h1 {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 8vw, 4.5rem); /* Responsive sizing */
   margin-bottom: 1rem;
   letter-spacing: -2px;
+  font-weight: 900;
+  text-transform: uppercase;
 }
 
-.hero p {
-  font-size: 1.2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-/* Blue Cards Section */
-.cards-section {
-  background-color: var(--blue);
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  background-color: var(--white);
-  width: 100%;
-}
-
-.card img {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  display: block;
-}
-
-.card-content {
-  padding: 3rem;
-}
-
-.card-content h3 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.card-content button {
-  background-color: var(--orange);
-  color: var(--white);
-  border: none;
-  padding: 1rem 2rem;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: transform 0.2s;
-}
-
-/* Section 1 */
-.section1 {
-  padding: 6rem 3rem;
-}
-
-.section1 h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-}
-
-.section1 p {
-  font-size: 1.2rem;
-  max-width: 800px;
-  line-height: 1.8;
-}
-
-/* Stats Section */
+/* 06: STATS SECTION (High Impact) */
 .stats-bar {
   background-color: var(--orange);
   color: #000;
   display: flex;
   justify-content: space-between;
   padding: 4rem 3rem;
-}
-
-.stat-block {
-  flex: 1;
-  text-align: left;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
 }
 
 .stat-block h3 {
   font-size: 4.5rem;
-  font-family: 'Courier New', monospace;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 900;
   margin-bottom: 0.5rem;
 }
 
-.stat-block p {
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-/* Features Section Refined */
-.features {
-  padding: 6rem 3rem;
-  display: flex;
-  gap: 4rem;
-  background-color: var(--white);
-}
-
-.column h3 {
-  font-size: 1.5rem;
-  margin-bottom: 2.5rem;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 0.5rem;
-}
-
-.feature-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-}
-
+/* 07: FEATURES (Interactive Pills) */
 .feature-word {
   position: relative;
   font-size: 1rem;
   font-weight: bold;
   padding: 0.75rem 1.25rem;
   background-color: var(--gray);
-  border-radius: 4px;
+  border: 1px solid #000;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .feature-word:hover {
   background-color: #e0e0e0;
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px #000;
 }
 
 .feature-card {
@@ -186,8 +121,8 @@ body {
   left: 0;
   width: 280px;
   background-color: var(--white);
-  border: 1px solid #ddd;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  border: 2px solid #000;
+  box-shadow: 10px 10px 0px rgba(0,0,0,1);
   padding: 1.5rem;
   z-index: 100;
   display: none;
@@ -197,192 +132,32 @@ body {
   display: block;
 }
 
-.feature-card h4 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: var(--blue);
-}
-
-.feature-card img {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 1rem;
-}
-
-/* How We Help */
-.how-we-help {
-  padding: 6rem 3rem;
-}
-
-.help-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-}
-
-.help-card {
-  background-color: var(--gray);
-  padding: 2.5rem;
-  border: 1px solid #ddd;
-}
-
-.card-number {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--orange);
-  margin-bottom: 1rem;
-}
-
+/* 08: VIDEO & DIRECTOR BLOCK */
 .director-block {
   display: flex;
   background-color: var(--gray);
-  border-top: 1px solid #ccc;
+  border: 2px solid #000;
 }
 
-.video-container {
-  flex: 1.2;
-  padding: 3rem;
-}
-
-.video-container iframe {
-  width: 100%;
-  aspect-ratio: 16/9;
-  border-radius: 8px;
-}
-
-.director-text {
-  flex: 1;
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-/* Testimonials */
-.testimonial-section {
-  padding: 6rem 3rem;
-  background-color: rgba(255,255,255,0.8);
-}
-
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background-color: #ddd;
-}
-
-.testimonial-card {
-  background-color: var(--white);
-}
-
-.testimonial-card video, .testimonial-card img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-}
-
-.testimonial-content {
-  padding: 2rem;
-}
-
-/* Partners */
-.partners {
-  padding: 4rem 3rem;
-}
-
-.partner-row {
-  display: flex;
-  gap: 4rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
-.partner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  filter: grayscale(100%);
-  opacity: 0.7;
-}
-
-/* Final CTA */
-.cta-block {
-  padding: 5rem 3rem;
-  background-color: var(--blue);
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.cta-buttons button {
-  padding: 1.25rem 3rem;
-  font-size: 1.1rem;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.btn-join-main { background-color: var(--orange); color: white; }
-.btn-explore-main { background-color: white; color: var(--blue); }
-
-/* Footer */
+/* 09: FOOTER */
 .footer {
   padding: 6rem 3rem;
   display: flex;
   justify-content: space-between;
   background-color: var(--gray);
+  border-top: 2px solid #000;
 }
 
-.footer-left, .footer-right { flex: 1; }
-.footer ul { list-style: none; }
-.footer ul li { margin-bottom: 0.8rem; }
-.footer a { color: #666; font-size: 0.85rem; text-decoration: none; }
-.footer input {
-  padding: 1rem;
-  width: 80%;
-  border: 1px solid #ccc;
-  margin: 1.5rem 0;
-}
-
+/* 10: RESPONSIVE OVERRIDES */
 @media (max-width: 1024px) {
   .container-80, .stats-bar, .features, .how-we-help, .partners, .cta-block, .footer {
     width: 100%;
   }
-  .help-grid, .testimonial-grid { grid-template-columns: 1fr; }
-  .director-block, .features { flex-direction: column; }
-}
-
-/* src/app/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --orange: #f57c00;
-  --blue: #005bab;
-  --white: #fff;
-  --gray: #f5f5f5;
-  --font: 'Noto Sans JP', sans-serif;
-}
-
-body {
-  font-family: var(--font);
-  background-color: var(--white);
-  color: #000;
-  margin: 0;
-  overflow-x: hidden;
-}
-
-/* 80% Content Alignment */
-.container-80 {
-  width: 80%;
-  margin-left: 0;
-  margin-right: auto;
-}
-
-/* Custom Selection Color */
-::selection {
-  background-color: #6082a3;
-  color: white;
+  .stats-bar {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .director-block {
+    flex-direction: column;
+  }
 }
