@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 
 export default function DanielIncPlatform() {
-  // --- CAROUSEL LOGIC ---
+  // --- CAROUSEL LOGIC (Unchanged) ---
   const slides = [
     { name: "A Word From Our Director", desc: "We built this platform to bridge the gap between digital convenience and real-world community connection." },
     { name: "Head of Product", desc: "Our latest update focuses on speed and reliability for local searches." }
@@ -14,7 +14,7 @@ export default function DanielIncPlatform() {
     setCurrentSlide((prev) => (prev + n + slides.length) % slides.length);
   };
 
-  // --- POPUP & MODAL LOGIC ---
+  // --- POPUP & MODAL LOGIC (Unchanged) ---
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [popup, setPopup] = useState({ 
     display: 'none', 
@@ -54,6 +54,8 @@ export default function DanielIncPlatform() {
 
   return (
     <>
+      {/* --- CSS BLOCK --- */}
+      {/* Added styles for Features, Testimony, and Partners sections */}
       <style dangerouslySetInnerHTML={{ __html: `
         * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0 !important; }
         body { font-family: 'Courier New', Courier, monospace; background-color: #f4f4f4; color: #000; line-height: 1.4; overflow-x: hidden; }
@@ -82,20 +84,14 @@ export default function DanielIncPlatform() {
         .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: #000; color: #fff; border: 1px solid #fff; padding: 15px; cursor: pointer; z-index: 10; }
         .nav-arrow:hover { background: #fff; color: #000; }
 
-        .help-section { padding: 60px 40px; background: #fff; }
-        .help-list { margin-top: 20px; list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .help-list li { border: 1px solid #000; padding: 15px; }
-        .help-list li::before { content: "■ "; color: #ff9d00; }
-
-        .how-it-works { padding: 60px 40px; background: #f9f9f9; }
-        .steps-container { display: flex; margin-top: 30px; border: 2px solid #000; }
-        .step-item { flex: 1; padding: 30px; border-right: 2px solid #000; }
-        .step-num { font-size: 3rem; font-weight: 900; opacity: 0.2; display: block; margin-bottom: 10px; }
-
+        /* --- FEATURES GRID CSS --- */
         .features-area { padding: 60px 40px; background: #fff; }
         .flex-grid-container { display: flex; flex-wrap: wrap; border: 2px solid #000; margin-top: 20px; }
         .feature-block { flex: 1 1 50%; min-width: 300px; }
         .feature-block-header { background: #000; color: #fff; padding: 15px 20px; border-bottom: 2px solid #000; border-right: 2px solid #000; }
+        /* Negative margin hack for borders */
+        .feature-block:last-child .feature-block-header, .feature-block:last-child .flex-grid-items .feature-card { border-right: none; }
+        .flex-grid-items { display: flex; flex-wrap: wrap; }
         .feature-card { flex: 1; min-width: 150px; background: #e0e0e0; padding: 20px; border-right: 1px solid #000; border-bottom: 1px solid #000; transition: 0.2s; height: 150px; }
         .feature-card:hover { background: #ffcc00; color: #000; }
         .feature-card h4 { font-size: 1.5rem; opacity: 0.4; }
@@ -112,13 +108,19 @@ export default function DanielIncPlatform() {
         .modal-content { background: #fff; width: 100%; max-width: 600px; padding: 40px; position: relative; color: #000; border: 2px solid #000; box-shadow: 20px 20px 0 #000; }
         .close-btn { position: absolute; top: 0; right: 0; cursor: pointer; font-weight: bold; border-left: 2px solid #000; border-bottom: 2px solid #000; padding: 10px 15px; background: #ffcc00; }
 
+        /* --- SUCCESS STORIES CSS --- */
         .testimony { padding: 80px 40px; background: #fff; text-align: center; }
         .testimony-container { max-width: 800px; margin: 40px auto 0; border: 2px solid #000; padding: 20px; }
         .testimony-media { width: 100%; height: 400px; background: #ddd; display: flex; align-items: center; justify-content: center; border: 1px solid #000; margin-bottom: 20px; }
+        .testimony-info h3 { margin-bottom: 5px; }
+        .testimony-desc { margin-top: 15px; font-style: italic; }
+        .is-video .testimony-desc { display: none; }
 
+        /* --- PARTNERS GRID CSS --- */
         .partners-section { padding: 40px; background: #fff; }
         .partners-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); border: 2px solid #000; background: #000; gap: 1px; }
         .partner-box { background: #fff; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; transition: 0.2s; }
+        .partner-box:hover { background: #eee; }
 
         .cta-yellow { background: #ffcc00; padding: 50px 40px; text-align: center; border-top: 2px solid #000; }
         .cta-buttons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
@@ -193,6 +195,37 @@ export default function DanielIncPlatform() {
           </div>
         </section>
 
+        {/* --- 7. PLATFORM FEATURES SECTION (Added) --- */}
+        <section className="features-area">
+          <h2>Platform Features</h2>
+          <div className="flex-grid-container">
+              <div className="feature-block">
+                  <div className="feature-block-header">
+                      <h3>For Users</h3>
+                      <p>Tools to find exactly what you need, fast.</p>
+                  </div>
+                  <div className="flex-grid-items">
+                      <div className="feature-card"><h4>1</h4>Search & Filter</div>
+                      <div className="feature-card"><h4>2</h4>Verified Reviews</div>
+                      <div className="feature-card"><h4>3</h4>Direct Chat</div>
+                      <div className="feature-card"><h4>4</h4>Save Lists</div>
+                  </div>
+              </div>
+              <div className="feature-block">
+                  <div className="feature-block-header">
+                      <h3>For Businesses</h3>
+                      <p>Everything you need to manage and expand.</p>
+                  </div>
+                  <div className="flex-grid-items">
+                      <div className="feature-card"><h4>1</h4>Pro Profile</div>
+                      <div className="feature-card"><h4>2</h4>Analytics Dashboard</div>
+                      <div className="feature-card"><h4>3</h4>Lead Manager</div>
+                      <div className="feature-card"><h4>4</h4>Promo Tools</div>
+                  </div>
+              </div>
+          </div>
+        </section>
+
         {/* --- 8. INTERACTIVE BLUE BLOCK --- */}
         <section className="interactive-blue">
           <div className="blue-grid">
@@ -205,8 +238,19 @@ export default function DanielIncPlatform() {
                 <div className="tag" 
                      onMouseEnter={(e) => showPopup(e, 'Price Compare', 'Compare service quotes.')} 
                      onMouseLeave={hidePopup}>Price Compare</div>
+                <div className="tag" 
+                     onMouseEnter={(e) => showPopup(e, 'Instant Booking', 'Schedule appointments directly.')} 
+                     onMouseLeave={hidePopup}>Instant Booking</div>
                 <div className="tag soon">AI Assistant</div>
               </div>
+            </div>
+            <div>
+               <h2>Business Suite</h2>
+               <div className="feature-tag-list">
+                   <div className="tag" onMouseEnter={(e) => showPopup(e, 'Live Dashboard', 'Real-time metrics.')} onMouseLeave={hidePopup}>Live Dashboard</div>
+                   <div className="tag" onMouseEnter={(e) => showPopup(e, 'Targeted Ads', 'Hyper-local campaigns.')} onMouseLeave={hidePopup}>Targeted Ads</div>
+                   <div className="tag soon">Auto-Invoicing</div>
+               </div>
             </div>
           </div>
 
@@ -236,6 +280,45 @@ export default function DanielIncPlatform() {
           </div>
         )}
 
+        {/* --- 9. SUCCESS STORIES SECTION (Added) --- */}
+        <section className="testimony">
+            <h2>Success Stories</h2>
+            <p>See how locals are thriving.</p>
+            
+            <div className="testimony-container">
+                <div className="testimony-media" style={{ background: "#ddd url('placeholder-image.jpg') center/cover" }}>IMAGE PLACEHOLDER</div>
+                <div className="testimony-info">
+                    <h3>The Local Coffee Co.</h3>
+                    <p>Client: Sarah M. (Owner, 34)</p>
+                </div>
+                <p className="testimony-desc">"Since joining, our weekend foot traffic doubled. The local visibility tools are incredible."</p>
+            </div>
+
+            <div className="testimony-container is-video" style={{ marginTop: '40px' }}>
+                <div className="testimony-media" style={{ background: '#111', color: '#fff' }}>▶ VIDEO PLACEHOLDER</div>
+                <div className="testimony-info">
+                    <h3>MetroTech Repair Services</h3>
+                    <p>Client: David K. (Lead Tech, 29)</p>
+                </div>
+                <p className="testimony-desc">"Video testimonials don't need text descriptions."</p>
+            </div>
+        </section>
+
+        {/* --- 10. PARTNERS SECTION (Added) --- */}
+        <section className="partners-section">
+            <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Our Partners</h2>
+            <div className="partners-grid">
+                <a href="#" className="partner-box">LOGO 1</a>
+                <a href="#" className="partner-box">LOGO 2</a>
+                <a href="#" className="partner-box">LOGO 3</a>
+                <a href="#" className="partner-box">LOGO 4</a>
+                <a href="#" className="partner-box">LOGO 5</a>
+                <a href="#" className="partner-box">LOGO 6</a>
+                <a href="#" className="partner-box">LOGO 7</a>
+                <a href="#" className="partner-box">LOGO 8</a>
+            </div>
+        </section>
+
         {/* --- 12. FINAL CTA & FOOTER --- */}
         <div className="cta-yellow">
           <h2>Ready To Grow Your Community Presence?</h2>
@@ -253,4 +336,4 @@ export default function DanielIncPlatform() {
       </main>
     </>
   );
-} 
+}
