@@ -24,6 +24,8 @@ export default function VerificationNode() {
                 key={i}
                 type="text"
                 maxLength={1}
+                placeholder="0"
+                aria-label={`Digit ${i} of 6`}
                 className="w-full aspect-square border-2 border-black bg-white text-center font-black text-xl outline-none focus:bg-black focus:text-white transition-all"
               />
             ))}
