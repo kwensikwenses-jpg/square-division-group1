@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
+import Link from 'next/link'; //
 
 export default function DanielIncPlatform() {
   // --- CAROUSEL LOGIC (Unchanged) ---
@@ -32,7 +33,7 @@ export default function DanielIncPlatform() {
     
     setPopup({
       display: 'block',
-      top: rect.top + window.scrollY - 100, // Adjusting offset for Brutalist feel
+      top: rect.top + window.scrollY - 100, 
       left: rect.left + window.scrollX,
       title,
       desc
@@ -54,8 +55,7 @@ export default function DanielIncPlatform() {
 
   return (
     <>
-      {/* --- CSS BLOCK --- */}
-      {/* Added styles for Features, Testimony, and Partners sections */}
+      {/* --- CSS BLOCK (Unchanged Styles) --- */}
       <style dangerouslySetInnerHTML={{ __html: `
         * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0 !important; }
         body { font-family: 'Courier New', Courier, monospace; background-color: #f4f4f4; color: #000; line-height: 1.4; overflow-x: hidden; }
@@ -69,7 +69,9 @@ export default function DanielIncPlatform() {
         .hero-half:last-child { border-right: none; background: #f0f0f0; }
         .hero-img-placeholder { position: absolute; top:0; left:0; width: 100%; height: 100%; background: #ccc; opacity: 0.2; z-index: 0; }
         .hero-content { position: relative; z-index: 2; }
-        .hero-btn { display: inline-block; margin-top: 20px; padding: 15px 30px; border: 2px solid #000; font-weight: bold; background: #fff; transition: 0.2s; cursor: pointer; }
+        
+        /* Updated button class to work with Next/Link */
+        .hero-btn { display: inline-block; margin-top: 20px; padding: 15px 30px; border: 2px solid #000; font-weight: bold; background: #fff; transition: 0.2s; cursor: pointer; color: #000; }
         .hero-btn:hover { background: #000; color: #fff; }
 
         .stats-section { background: #ff9d00; padding: 40px; }
@@ -84,12 +86,10 @@ export default function DanielIncPlatform() {
         .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: #000; color: #fff; border: 1px solid #fff; padding: 15px; cursor: pointer; z-index: 10; }
         .nav-arrow:hover { background: #fff; color: #000; }
 
-        /* --- FEATURES GRID CSS --- */
         .features-area { padding: 60px 40px; background: #fff; }
         .flex-grid-container { display: flex; flex-wrap: wrap; border: 2px solid #000; margin-top: 20px; }
         .feature-block { flex: 1 1 50%; min-width: 300px; }
         .feature-block-header { background: #000; color: #fff; padding: 15px 20px; border-bottom: 2px solid #000; border-right: 2px solid #000; }
-        /* Negative margin hack for borders */
         .feature-block:last-child .feature-block-header, .feature-block:last-child .flex-grid-items .feature-card { border-right: none; }
         .flex-grid-items { display: flex; flex-wrap: wrap; }
         .feature-card { flex: 1; min-width: 150px; background: #e0e0e0; padding: 20px; border-right: 1px solid #000; border-bottom: 1px solid #000; transition: 0.2s; height: 150px; }
@@ -108,7 +108,6 @@ export default function DanielIncPlatform() {
         .modal-content { background: #fff; width: 100%; max-width: 600px; padding: 40px; position: relative; color: #000; border: 2px solid #000; box-shadow: 20px 20px 0 #000; }
         .close-btn { position: absolute; top: 0; right: 0; cursor: pointer; font-weight: bold; border-left: 2px solid #000; border-bottom: 2px solid #000; padding: 10px 15px; background: #ffcc00; }
 
-        /* --- SUCCESS STORIES CSS --- */
         .testimony { padding: 80px 40px; background: #fff; text-align: center; }
         .testimony-container { max-width: 800px; margin: 40px auto 0; border: 2px solid #000; padding: 20px; }
         .testimony-media { width: 100%; height: 400px; background: #ddd; display: flex; align-items: center; justify-content: center; border: 1px solid #000; margin-bottom: 20px; }
@@ -116,7 +115,6 @@ export default function DanielIncPlatform() {
         .testimony-desc { margin-top: 15px; font-style: italic; }
         .is-video .testimony-desc { display: none; }
 
-        /* --- PARTNERS GRID CSS --- */
         .partners-section { padding: 40px; background: #fff; }
         .partners-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); border: 2px solid #000; background: #000; gap: 1px; }
         .partner-box { background: #fff; aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 0.8rem; transition: 0.2s; }
@@ -124,22 +122,26 @@ export default function DanielIncPlatform() {
 
         .cta-yellow { background: #ffcc00; padding: 50px 40px; text-align: center; border-top: 2px solid #000; }
         .cta-buttons { margin-top: 30px; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .cta-btn-main { padding: 15px 30px; border: 2px solid #000; background: #000; color: #ffcc00; font-weight: bold; }
-        .cta-btn-sec { padding: 15px 30px; border: 2px solid #000; background: transparent; color: #000; font-weight: bold; }
+        
+        /* Updated CTA buttons to work with Next/Link */
+        .cta-btn-main { display: inline-block; padding: 15px 30px; border: 2px solid #000; background: #000; color: #ffcc00; font-weight: bold; }
+        .cta-btn-sec { display: inline-block; padding: 15px 30px; border: 2px solid #000; background: transparent; color: #000; font-weight: bold; }
 
         .footer-main { background: #000; color: #fff; padding: 60px 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; }
       `}} />
 
       <main>
-        {/* --- 1. EYEBROW --- */}
+        {/* --- 1. UPDATED EYEBROW NAV --- */}
         <div id="eyebrow">
-          <a className="eyebrow-left" href="#">
+          <Link href="/" className="eyebrow-left" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <svg width="12" height="12"><rect width="12" height="12" fill="#3083FD"/></svg>
             <span>Connecting communities & empowering local businesses.</span>
-          </a>
+          </Link>
           <ul className="eyebrow-right" style={{ listStyle: 'none', display: 'flex', gap: '15px' }}>
-            <li><a href="#">Set as Home</a></li>
-            <li><a href="#">Help</a></li>
+            <li><Link href="/about">About</Link></li>
+            <li><Link href="/business/login">Join / Login</Link></li>
+            <li><Link href="/business/get-listed" style={{ fontWeight: 'bold' }}>Register Business</Link></li>
+            <li><Link href="/explore" style={{ textDecoration: 'underline' }}>Explore Map</Link></li>
           </ul>
         </div>
 
@@ -150,7 +152,8 @@ export default function DanielIncPlatform() {
             <div className="hero-content">
               <h1>Find Local Businesses</h1>
               <p>Discover hidden gems and trusted services in your community right now.</p>
-              <div className="hero-btn">EXPLORE NOW</div>
+              {/* Linked to Explore Page */}
+              <Link href="/explore" className="hero-btn">EXPLORE NOW</Link>
             </div>
           </div>
           <div className="hero-half">
@@ -158,7 +161,8 @@ export default function DanielIncPlatform() {
             <div className="hero-content">
               <h1>List Your Business</h1>
               <p>Reach more local customers and grow your presence effortlessly.</p>
-              <div className="hero-btn" style={{ background: '#000', color: '#fff' }}>GET LISTED</div>
+              {/* Linked to Get Listed Page */}
+              <Link href="/business/get-listed" className="hero-btn" style={{ background: '#000', color: '#fff' }}>GET LISTED</Link>
             </div>
           </div>
         </section>
@@ -195,7 +199,7 @@ export default function DanielIncPlatform() {
           </div>
         </section>
 
-        {/* --- 7. PLATFORM FEATURES SECTION (Added) --- */}
+        {/* --- 7. PLATFORM FEATURES SECTION --- */}
         <section className="features-area">
           <h2>Platform Features</h2>
           <div className="flex-grid-container">
@@ -280,7 +284,7 @@ export default function DanielIncPlatform() {
           </div>
         )}
 
-        {/* --- 9. SUCCESS STORIES SECTION (Added) --- */}
+        {/* --- 9. SUCCESS STORIES SECTION --- */}
         <section className="testimony">
             <h2>Success Stories</h2>
             <p>See how locals are thriving.</p>
@@ -304,7 +308,7 @@ export default function DanielIncPlatform() {
             </div>
         </section>
 
-        {/* --- 10. PARTNERS SECTION (Added) --- */}
+        {/* --- 10. PARTNERS SECTION --- */}
         <section className="partners-section">
             <h2 style={{ textAlign: 'center', marginBottom: '20px' }}>Our Partners</h2>
             <div className="partners-grid">
@@ -323,14 +327,14 @@ export default function DanielIncPlatform() {
         <div className="cta-yellow">
           <h2>Ready To Grow Your Community Presence?</h2>
           <div className="cta-buttons">
-            <a href="#" className="cta-btn-main">APPLY FOR BUSINESS</a>
-            <a href="#" className="cta-btn-sec">EXPLORE FOR USERS</a>
+            <Link href="/business/get-listed" className="cta-btn-main">APPLY FOR BUSINESS</Link>
+            <Link href="/explore" className="cta-btn-sec">EXPLORE FOR USERS</Link>
           </div>
         </div>
 
         <footer className="footer-main">
           <div><h3>+ daniel.inc</h3><p>Connecting communities.</p></div>
-          <div><strong>QUICK LINKS</strong><br/><a href="#">About Us</a></div>
+          <div><strong>QUICK LINKS</strong><br/><Link href="/about">About Us</Link></div>
           <div><strong>SOCIAL</strong><br/>X / Instagram</div>
         </footer>
       </main>
