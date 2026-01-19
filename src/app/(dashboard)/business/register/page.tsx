@@ -6,490 +6,346 @@ import Navbar from '@/components/Navbar';
 import MenuOverlay from '@/components/MenuOverlay'; 
 import { supabase } from '@/utils/supabase';
 
-// ==========================================
-// 0. TYPES
-// ==========================================
+// --- TYPES TO MATCH YOUR SCREENSHOTS ---
 interface RegistrationData {
+  // Step 1: Business Info
   businessName: string;
-  bizType: string;
+  legalName: string;
+  tradingName: string;
+  regNumber: string;
   category: string;
+  bizType: string;
   email: string;
+  phone: string;
+  mobile: string;
+  website: string;
+  addressStreet: string;
+  addressCity: string;
+  addressProvince: string;
+  addressCode: string;
+  contactFirstName: string;
+  contactLastName: string;
+  
+  // Step 2: Security
   password: string;
-  pin: string;
-  registrationNumber: string;
-  agreeToTerms: boolean;
-  locationVerified: boolean;
-  address: string;
-  tier: string;
+  confirmPassword: string;
+  securityQuestion: string;
+  securityAnswer: string;
+  agreeTerms: boolean;
+
+  // Step 3: Verification
+  docsUploaded: boolean;
 }
 
-// ==========================================
-// 1. SYSTEM LOGS
-// ==========================================
-function SystemLogs() {
-  const [logs, setLogs] = useState([
-    { time: "03:21:04", event: "INITIALIZING_VAULT_DECRYPT", status: "OK" },
-    { time: "03:21:12", event: "METADATA_SYNC_COORD_29.8S", status: "SYNC" },
-  ]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const newLog = {
-        time: new Date().toLocaleTimeString('en-GB', { hour12: false }),
-        event: "CORE_SYSTEM_HEARTBEAT_STABLE",
-        status: "LIVE"
-      };
-      setLogs(prev => [...prev.slice(-4), newLog]);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="bg-black text-[#6082a3] p-4 border-t-4 border-black font-mono text-[9px] uppercase tracking-widest overflow-hidden mt-8 hidden md:block">
-      <div className="flex gap-2 items-center text-white shrink-0 mb-2">
-        <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse"></span>
-        <span className="font-black">SYS_LOGS:</span>
-      </div>
-      <div className="flex flex-col gap-1">
-        {logs.map((log, i) => (
-          <div key={i} className="whitespace-nowrap flex gap-3">
-            <span className="opacity-40">[{log.time}]</span>
-            <span className="text-white">{log.event}</span>
-            <span className="opacity-40 italic">// {log.status}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ==========================================
-// 2. STEP 1: IDENTITY (Fixed Select Red Line)
-// ==========================================
-interface Step1Props {
-  data: RegistrationData;
-  updateFields: (fields: Partial<RegistrationData>) => void;
-  onNext: () => void;
-}
-
-const RegisterStep1: React.FC<Step1Props> = ({ data, updateFields, onNext }) => {
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
-      <h2 className="text-3xl font-black italic uppercase tracking-tighter">Business Details</h2>
-      <div className="border-2 border-black p-8 space-y-6 bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-        
-        {/* Trading Name */}
-        <div className="space-y-2">
-          <p className="text-[10px] font-black uppercase opacity-40">Trading Name</p>
-          <input 
-            aria-label="Trading Name"
-            className="w-full bg-transparent border-b-2 border-black py-3 text-xl font-bold uppercase outline-none focus:border-orange-500"
-            placeholder="ENTER BUSINESS NAME"
-            value={data.businessName || ""}
-            onChange={(e) => updateFields({ businessName: e.target.value })}
-          />
-        </div>
-
-        {/* Email */}
-        <div className="space-y-2">
-          <p className="text-[10px] font-black uppercase opacity-40">Email Node</p>
-          <input 
-            aria-label="Email Address"
-            type="email"
-            className="w-full bg-transparent border-b-2 border-black py-3 text-xl font-bold uppercase outline-none focus:border-orange-500"
-            placeholder="USER@DOMAIN.COM"
-            value={data.email || ""}
-            onChange={(e) => updateFields({ email: e.target.value })}
-          />
-        </div>
-
-        {/* Password */}
-        <div className="space-y-2">
-          <p className="text-[10px] font-black uppercase opacity-40">Access Key</p>
-          <input 
-            aria-label="Password"
-            type="password"
-            className="w-full bg-transparent border-b-2 border-black py-3 text-xl font-bold uppercase outline-none focus:border-orange-500"
-            placeholder="••••••••"
-            value={data.password || ""}
-            onChange={(e) => updateFields({ password: e.target.value })}
-          />
-        </div>
-
-        {/* Category - Fixed Red Line by adding aria-label and simplifying onChange */}
-        <div className="space-y-2">
-          <p className="text-[10px] font-black uppercase opacity-40">Industry Sector</p>
-          <div className="relative">
-            <select 
-              aria-label="Industry Sector"
-              className="w-full bg-transparent border-b-2 border-black py-3 text-xl font-bold uppercase outline-none cursor-pointer appearance-none"
-              value={data.category || ""} 
-              onChange={(e) => updateFields({ category: e.target.value })}
-            >
-              <option value="" disabled>SELECT CATEGORY</option>
-              <option value="auto">MECHANIC / AUTO REPAIR</option>
-              <option value="food">FOOD & BEVERAGE</option>
-              <option value="tech">TECHNOLOGY</option>
-              <option value="retail">RETAIL</option>
-              <option value="logistics">LOGISTICS</option>
-            </select>
-            <span className="absolute right-0 top-3 pointer-events-none text-2xl font-black italic">↓</span>
-          </div>
-        </div>
-      </div>
-
-      <button onClick={onNext} className="w-full bg-black text-white p-6 font-black uppercase italic hover:bg-orange-600 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">
-        Continue to Security →
-      </button>
-    </div>
-  );
-};
-
-// ==========================================
-// 3. STEP 2: PIN
-// ==========================================
-interface Step2Props {
-  data: RegistrationData;
-  updateFields: (fields: Partial<RegistrationData>) => void;
-  onNext: () => void;
-  onBack: () => void;
-}
-
-const RegisterStep2: React.FC<Step2Props> = ({ data, updateFields, onNext, onBack }) => {
-  const [pin, setPin] = useState<string[]>(
-    data.pin ? data.pin.split('').concat(Array(6 - data.pin.length).fill('')) : Array(6).fill('')
-  );
-
-  useEffect(() => {
-    updateFields({ pin: pin.join('') });
-  }, [pin]);
-
-  const handleInput = (val: string) => {
-    const nextIndex = pin.findIndex(d => d === '');
-    if (nextIndex !== -1) {
-      const newPin = [...pin];
-      newPin[nextIndex] = val;
-      setPin(newPin);
-    }
-  };
-
-  const handleBackspace = () => {
-    const filledIndices = pin.map((d, i) => d !== '' ? i : -1).filter(i => i !== -1);
-    const lastIndex = filledIndices.length > 0 ? filledIndices[filledIndices.length - 1] : -1;
-    if (lastIndex !== -1) {
-      const newPin = [...pin];
-      newPin[lastIndex] = '';
-      setPin(newPin);
-    }
-  };
-
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 font-mono">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-black italic uppercase">Security Pin</h2>
-        <p className="text-[10px] opacity-60 uppercase leading-tight">Create a 6-digit access code.</p>
-      </div>
-      <div className="border-4 border-black bg-white flex flex-col md:flex-row shadow-[15px_15px_0px_0px_rgba(0,0,0,1)]">
-        <div className="flex-1 p-10 flex flex-col items-center justify-center border-b-4 md:border-b-0 md:border-r-4 border-black">
-          <p className="text-[10px] font-black uppercase mb-6 opacity-40">Security Sequence</p>
-          <div className="flex gap-2">
-            {pin.map((digit, i) => (
-              <div key={i} className="w-10 h-10 border-2 border-black flex items-center justify-center bg-gray-50 relative overflow-hidden">
-                <span className={`text-xl font-black transition-all duration-300 transform ${digit ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>*</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="grid grid-cols-3 bg-black gap-1 border-t-0">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-            <button type="button" key={num} onClick={() => handleInput(num.toString())} className="w-20 h-20 bg-white hover:bg-orange-500 hover:text-white font-black text-xl transition-colors active:bg-black active:text-white">{num}</button>
-          ))}
-          <div className="bg-gray-200 w-20 h-20" />
-          <button type="button" onClick={() => handleInput('0')} className="w-20 h-20 bg-white hover:bg-orange-500 hover:text-white font-black text-xl active:bg-black active:text-white">0</button>
-          <button type="button" onClick={handleBackspace} className="w-20 h-20 bg-gray-200 hover:bg-red-600 hover:text-white font-black text-xs uppercase">DEL</button>
-        </div>
-      </div>
-      <div className="flex gap-4">
-        <button onClick={onBack} className="flex-1 border-4 border-black p-4 font-black uppercase italic hover:bg-gray-200 text-sm">Back</button>
-        <button onClick={onNext} disabled={pin.some(d => d === '')} className="flex-[2] bg-black text-white p-4 font-black uppercase italic hover:bg-orange-600 shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)] disabled:opacity-20 text-sm">Verify Pin →</button>
-      </div>
-    </div>
-  );
-};
-
-// ==========================================
-// 4. STEP 3: OTP VERIFICATION (Fixed Red Input)
-// ==========================================
-interface Step3Props {
-  onNext: () => void;
-  onBack: () => void;
-}
-
-const RegisterStep3: React.FC<Step3Props> = ({ onNext, onBack }) => {
-  const [otp, setOtp] = useState<string[]>(Array(6).fill(""));
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const val = e.target.value;
-    if (isNaN(Number(val))) return;
-
-    const newOtp = [...otp];
-    newOtp[index] = val;
-    setOtp(newOtp);
-
-    if (val && e.target.nextSibling) {
-      (e.target.nextSibling as HTMLInputElement).focus();
-    }
-  };
-
-  return (
-    <div className="w-full border-4 border-black bg-white shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] animate-in slide-in-from-bottom-8 duration-500 font-mono">
-      <div className="p-8 space-y-8">
-        <header className="space-y-2">
-          <p className="text-[8px] font-black uppercase tracking-[0.4em] opacity-40 italic">Step_03 // Security_Protocol</p>
-          <h2 className="text-3xl font-black italic uppercase tracking-tighter">Two-Factor_Auth</h2>
-        </header>
-
-        <div className="border-2 border-black p-6 bg-[#edeae7] space-y-4">
-          <p className="text-[10px] font-black leading-relaxed">
-            SYSTEM_SENT_6_DIGIT_CODE_TO:<br/>
-            <span className="text-[#6082a3]">+27 *** *** **89</span>
-          </p>
-          
-          {/* OTP Input Grid */}
-          <div className="flex justify-between gap-2">
-            {otp.map((digit, index) => (
-              <input 
-                key={index}
-                aria-label={`OTP Digit ${index + 1}`} // Fixed: Added aria-label to clear Red Line
-                type="text"
-                maxLength={1}
-                value={digit}
-                onChange={(e) => handleChange(e, index)}
-                onFocus={(e) => e.target.select()}
-                className="w-full aspect-square border-2 border-black bg-white text-center font-black text-xl outline-none focus:bg-black focus:text-white transition-all"
-              />
-            ))}
-          </div>
-        </div>
-
-        <div className="flex justify-between items-center text-[9px] font-black uppercase">
-          <span className="opacity-40 italic tracking-widest">Expires_In: 04:59</span>
-          <button className="underline hover:text-[#6082a3]">Resend_Signal</button>
-        </div>
-
-        <div className="flex gap-4">
-          <button onClick={onBack} className="flex-1 border-4 border-black py-4 font-black uppercase text-xs hover:bg-gray-100">Back</button>
-          <button 
-            onClick={onNext} 
-            disabled={otp.some(d => d === '')}
-            className="flex-[2] border-4 border-black bg-black text-white py-4 font-black uppercase text-xs hover:bg-[#6082a3] disabled:opacity-50"
-          >
-            Verify_Identity
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ==========================================
-// 5. STEP 4: LOCATION
-// ==========================================
-interface Step4Props {
-  data: RegistrationData;
-  updateFields: (fields: Partial<RegistrationData>) => void;
-  onNext: () => void;
-  onBack: () => void;
-}
-
-const RegisterStep4: React.FC<Step4Props> = ({ data, updateFields, onNext, onBack }) => {
-  return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4">
-      <h2 className="text-3xl font-black italic uppercase tracking-tighter">Location Verification</h2>
-      <div className="border-2 border-black p-8 space-y-8 bg-white shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-        <div className="space-y-4">
-          <p className="text-[10px] font-black uppercase opacity-40 tracking-widest text-center">Physical Node Lock</p>
-          <div className="border-2 border-black aspect-video bg-gray-50 flex flex-col items-center justify-center relative overflow-hidden group">
-             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]" />
-             <div className="w-16 h-16 bg-green-500 rounded-full animate-ping absolute opacity-20" />
-             <div className="w-6 h-6 bg-green-600 rounded-full z-10 border-2 border-white shadow-lg" />
-             <div className="mt-12 text-center z-20">
-               <p className="text-[11px] font-black uppercase text-green-700 bg-white border border-green-700 px-3 py-1">
-                 {data.locationVerified ? "GPS LOCKED" : "Scanning..."}
-               </p>
-             </div>
-          </div>
-          <button type="button" onClick={() => updateFields({ locationVerified: true })} className="w-full text-[10px] font-black uppercase underline hover:text-orange-600">
-            [ SIMULATE_GPS_LOCK ]
-          </button>
-        </div>
-      </div>
-      <div className="flex gap-4">
-        <button onClick={onBack} className="flex-1 border-2 border-black p-6 font-black uppercase italic hover:bg-gray-200">Back</button>
-        <button onClick={onNext} className="flex-[2] bg-black text-white p-6 font-black uppercase italic hover:bg-orange-600 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">Confirm Coordinates →</button>
-      </div>
-    </div>
-  );
-};
-
-// ==========================================
-// 6. STEP 5: REVIEW
-// ==========================================
-interface Step5Props {
-  data: RegistrationData;
-  onConfirm: () => void;
-  onBack: () => void;
-}
-
-const RegisterStep5: React.FC<Step5Props> = ({ data, onConfirm, onBack }) => {
-  return (
-    <div className="w-full border-4 border-black bg-white shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] font-mono animate-in fade-in duration-500">
-      <div className="border-b-4 border-black p-6 bg-black text-white flex justify-between items-center">
-        <div className="space-y-1">
-          <p className="text-[10px] font-black uppercase tracking-widest opacity-40">Review_State</p>
-          <h2 className="text-xl font-black italic uppercase tracking-tighter">Final_Submission</h2>
-        </div>
-        <div className="h-10 w-10 border-2 border-white flex items-center justify-center font-black text-xs">05</div>
-      </div>
-      <div className="p-10 space-y-8">
-        <div className="bg-[#edeae7] border-4 border-black p-8 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p className="text-[9px] font-black opacity-40 uppercase tracking-widest">Entity_Name</p>
-              <p className="text-lg font-black uppercase italic leading-none mt-1">{data.businessName || "UNSPECIFIED"}</p>
-            </div>
-            <div>
-              <p className="text-[9px] font-black opacity-40 uppercase tracking-widest">Sector</p>
-              <p className="text-lg font-black uppercase italic leading-none mt-1">{data.category || "GENERAL"}</p>
-            </div>
-            <div className="md:col-span-2 border-t-2 border-black/10 pt-4">
-              <p className="text-[9px] font-black opacity-40 uppercase tracking-widest">Registration_Type</p>
-              <p className="text-sm font-black uppercase mt-1">{data.bizType === 'company' ? `Formal_Entity` : 'Informal_Proprietor'}</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex flex-col md:flex-row gap-4 pt-4">
-          <button onClick={onBack} className="flex-1 border-4 border-black p-5 font-black uppercase hover:bg-black/5 italic">← Modify</button>
-          <button onClick={onConfirm} className="flex-[2] bg-black text-white p-5 font-black uppercase tracking-widest hover:bg-orange-600 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.1)]">Authorize_Sync →</button>
-        </div>
-      </div>
-    </div>
-  ); 
-};
-
-// ==========================================
-// 7. COMPLETE
-// ==========================================
-const RegisterComplete = ({ businessName }: { businessName: string }) => {
-  const router = useRouter();
-  return (
-    <div className="animate-in zoom-in-95 duration-500">
-      <div className="border-4 border-black p-12 bg-white text-center space-y-8 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-        <div className="space-y-2">
-          <h2 className="text-5xl font-black italic uppercase tracking-tighter leading-none">Node Active</h2>
-          <p className="text-sm font-bold uppercase tracking-widest border-y border-black py-4 inline-block px-8">Welcome, {businessName || "User"}</p>
-        </div>
-        <div className="space-y-4 pt-4">
-          <button onClick={() => router.push('/business/login')} className="w-full bg-black text-white p-6 font-black uppercase italic text-xs tracking-[0.2em] hover:bg-orange-600 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,0.1)]">Go to Login Gateway</button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-// ==========================================
-// MAIN PAGE
-// ==========================================
+// --- MAIN COMPONENT ---
 export default function BusinessRegister() {
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  
   const [formData, setFormData] = useState<RegistrationData>({
-    businessName: '',
-    bizType: 'sole',
-    category: '',
-    email: '',
-    password: '',
-    pin: '',
-    registrationNumber: '',
-    agreeToTerms: false,
-    locationVerified: false,
-    address: '',
-    tier: 'silver'
+    businessName: '', legalName: '', tradingName: '', regNumber: '', category: '', bizType: '',
+    email: '', phone: '', mobile: '', website: '',
+    addressStreet: '', addressCity: '', addressProvince: '', addressCode: '',
+    contactFirstName: '', contactLastName: '',
+    password: '', confirmPassword: '', securityQuestion: '', securityAnswer: '', agreeTerms: false,
+    docsUploaded: false
   });
 
-  const updateFields = (fields: Partial<RegistrationData>) => {
-    setFormData(prev => ({ ...prev, ...fields }));
-  };
-
-  const nextStep = () => setStep(prev => prev + 1);
-  const prevStep = () => setStep(prev => prev - 1);
+  const update = (fields: Partial<RegistrationData>) => setFormData(prev => ({ ...prev, ...fields }));
+  
+  const next = () => { window.scrollTo(0,0); setStep(prev => prev + 1); };
+  const back = () => { window.scrollTo(0,0); setStep(prev => prev - 1); };
 
   const handleFinalSubmit = async () => {
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email: formData.email.trim().toLowerCase(),
-      password: formData.password,
-    });
-
-    if (error) {
-      alert(error.message);
+    // Simulate API Call
+    setTimeout(() => {
       setLoading(false);
-      return;
-    }
-
-    if (data.user) {
-      await supabase.from('profiles').insert([{ 
-        id: data.user.id, 
-        business_name: formData.businessName, 
-        tier: formData.tier 
-      }]);
-      setStep(6);
-    }
-    setLoading(false);
+      next(); // Go to complete step
+    }, 2000);
   };
 
   return (
-    <main className="min-h-screen bg-[#edeae7] text-black font-mono">
+    <div style={{ backgroundColor: '#edeae7', minHeight: '100vh', fontFamily: 'Courier New, monospace', color: '#000' }}>
       <Navbar onMenuClick={() => setIsMenuOpen(true)} />
       <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
-      
-      <div className="flex flex-col md:flex-row min-h-screen pt-20">
-        <div className="w-full md:w-1/3 p-12 bg-black text-[#edeae7] flex flex-col justify-between border-r border-black">
-          <div>
-            <h1 className="text-4xl font-black uppercase tracking-tighter mb-4 leading-none italic">
-              Join the<br/>Ecosystem.
-            </h1>
-            <p className="opacity-60 text-[10px] font-bold uppercase tracking-[0.3em] leading-relaxed">
-              Secure B2B Node Registration Protocol.
-            </p>
-          </div>
-          <div className="space-y-4 my-8">
-             <p className="text-[10px] font-bold uppercase tracking-widest opacity-40">Sequence Progress</p>
-             <div className="flex gap-2">
-               {[1, 2, 3, 4, 5].map(i => (
-                 <div key={i} className={`h-1 flex-1 transition-all ${step >= i ? 'bg-white' : 'bg-white/20'}`} />
-               ))}
-             </div>
-             <p className="text-xs font-black uppercase italic">
-               Step 0{step} // {step === 1 ? 'Identity' : step === 2 ? 'Security' : step === 3 ? 'Auth' : step === 4 ? 'Location' : 'Confirm'}
-             </p>
-          </div>
-          <SystemLogs />
+
+      {/* --- CSS STYLES --- */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        /* RESET & BASE */
+        * { box-sizing: border-box; }
+        input, select, textarea { font-family: 'Courier New', monospace; }
+        
+        /* CONTAINERS */
+        .reg-container { max-width: 900px; margin: 0 auto; padding: 100px 20px 60px 20px; }
+        .form-section { border: 2px solid #000; background: #fff; margin-bottom: 40px; }
+        .section-header { background: #fff; border-bottom: 2px solid #000; padding: 15px 20px; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; letter-spacing: 1px; }
+        .form-row { display: flex; border-bottom: 1px solid #ccc; }
+        .form-row:last-child { border-bottom: none; }
+        
+        /* INPUTS */
+        .input-group { padding: 15px; flex: 1; border-right: 1px solid #ccc; display: flex; flex-direction: column; }
+        .input-group:last-child { border-right: none; }
+        .full-width { width: 100%; border-right: none; }
+        
+        label { font-size: 0.7rem; text-transform: uppercase; opacity: 0.6; font-weight: bold; margin-bottom: 8px; display: block; }
+        input, select { 
+          width: 100%; border: none; background: transparent; 
+          font-size: 1rem; font-weight: bold; outline: none; 
+          padding: 5px 0; border-bottom: 1px dashed transparent; transition: 0.2s;
+        }
+        input:focus, select:focus { border-bottom: 1px dashed #000; }
+        
+        /* PROGRESS BAR */
+        .progress-bar { display: flex; border: 2px solid #000; background: #fff; margin-bottom: 40px; }
+        .step-item { flex: 1; text-align: center; padding: 15px 5px; font-size: 0.8rem; text-transform: uppercase; border-right: 2px solid #000; color: #ccc; cursor: default; font-weight: bold; }
+        .step-item:last-child { border-right: none; }
+        .step-item.active { background: #000; color: #fff; }
+        .step-item.completed { background: #ddd; color: #000; text-decoration: line-through; }
+
+        /* BUTTONS */
+        .nav-buttons { display: flex; justify-content: space-between; margin-top: 20px; border: 2px solid #000; background: #fff; }
+        .btn { padding: 20px 40px; font-weight: 900; text-transform: uppercase; border: none; background: transparent; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .btn:hover { background: #000; color: #fff; }
+        .btn-next { border-left: 2px solid #000; margin-left: auto; }
+        .btn-prev { border-right: 2px solid #000; }
+
+        /* UPLOAD BOX */
+        .upload-box { border: 2px solid #000; padding: 15px; text-align: center; margin-top: 5px; cursor: pointer; transition: 0.2s; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
+        .upload-box:hover { background: #f0f0f0; }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+          .form-row { flex-direction: column; }
+          .input-group { border-right: none; border-bottom: 1px solid #ccc; }
+          .progress-bar { font-size: 0.6rem; }
+        }
+      `}} />
+
+      <div className="reg-container">
+        
+        {/* HEADER */}
+        <div style={{ marginBottom: '30px' }}>
+          <button onClick={() => router.push('/')} style={{ border: '2px solid #000', background: '#fff', padding: '5px 15px', fontWeight: 'bold', cursor: 'pointer', marginBottom: '20px' }}>←</button>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '-1px' }}>Business Sign-Up</h1>
         </div>
 
-        <div className="w-full md:w-2/3 p-8 md:p-24 overflow-y-auto bg-[#edeae7]">
-          <div className="max-w-xl w-full mx-auto">
-            {step === 1 && <RegisterStep1 data={formData} updateFields={updateFields} onNext={nextStep} />}
-            {step === 2 && <RegisterStep2 data={formData} updateFields={updateFields} onNext={nextStep} onBack={prevStep} />}
-            {step === 3 && <RegisterStep3 onNext={nextStep} onBack={prevStep} />}
-            {step === 4 && <RegisterStep4 data={formData} updateFields={updateFields} onNext={nextStep} onBack={prevStep} />}
-            {step === 5 && <RegisterStep5 data={formData} onConfirm={handleFinalSubmit} onBack={prevStep} />}
-            {step === 6 && <RegisterComplete businessName={formData.businessName} />}
-          </div>
+        {/* PROGRESS BAR (Matching Screenshot 1) */}
+        <div className="progress-bar">
+          <div className={`step-item ${step === 1 ? 'active' : step > 1 ? 'completed' : ''}`}>1. Business Info</div>
+          <div className={`step-item ${step === 2 ? 'active' : step > 2 ? 'completed' : ''}`}>2. Security Setup</div>
+          <div className={`step-item ${step === 3 ? 'active' : step > 3 ? 'completed' : ''}`}>3. Verification</div>
+          <div className={`step-item ${step === 4 ? 'active' : ''}`}>4. Complete</div>
         </div>
+
+        {/* ================= STEP 1: BUSINESS INFO ================= */}
+        {step === 1 && (
+          <div className="animate-in fade-in">
+            {/* 1A. Business Details */}
+            <div className="form-section">
+              <div className="section-header">Business Details</div>
+              <div className="input-group full-width">
+                <label>Business Name</label>
+                <input value={formData.businessName} onChange={e => update({ businessName: e.target.value })} placeholder="ENTER TRADING NAME" />
+              </div>
+              <div className="input-group full-width">
+                <label>Legal Business Name</label>
+                <input value={formData.legalName} onChange={e => update({ legalName: e.target.value })} placeholder="ENTER REGISTERED NAME" />
+              </div>
+              <div className="input-group full-width">
+                <label>Business Registration Number *</label>
+                <div style={{ border: '2px solid #000', padding: '10px' }}>
+                  <input value={formData.regNumber} onChange={e => update({ regNumber: e.target.value })} placeholder="ENTER REGISTRATION NUMBER" style={{ border: 'none' }} />
+                </div>
+                <small style={{ marginTop: '5px', opacity: 0.5 }}>(Company / Close Corporation / Trust)</small>
+              </div>
+              <div className="input-group full-width">
+                <label htmlFor="category">Business Category</label>
+                <select id="category" title="Business Category" value={formData.category} onChange={e => update({ category: e.target.value })} style={{ border: '2px solid #000', padding: '10px' }}>
+                  <option value="">SELECT CATEGORY</option>
+                  <option value="tech">Technology</option>
+                  <option value="retail">Retail</option>
+                  <option value="service">Service</option>
+                </select>
+              </div>
+              <div className="input-group full-width">
+                <label>Business Type</label>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
+                  {['Sole Proprietor', 'Partnership', 'Private Company (Pty Ltd)', 'Public Company'].map(type => (
+                    <label key={type} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', opacity: 1 }}>
+                      <input type="radio" name="bizType" checked={formData.bizType === type} onChange={() => update({ bizType: type })} style={{ width: 'auto' }} />
+                      {type}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 1B. Contact & Address */}
+            <div className="form-section">
+              <div className="section-header">Business Information</div>
+              <div className="form-row">
+                <div className="input-group">
+                  <label htmlFor="businessEmail">Business Email</label>
+                  <input
+                    id="businessEmail"
+                    type="email"
+                    title="Business Email"
+                    placeholder="Enter business email"
+                    value={formData.email}
+                    onChange={e => update({ email: e.target.value })}
+                  />
+                </div>
+                <div className="input-group">
+                  <label htmlFor="businessPhone">Business Phone</label>
+                  <input
+                    id="businessPhone"
+                    type="tel"
+                    title="Business Phone"
+                    placeholder="Enter business phone"
+                    value={formData.phone}
+                    onChange={e => update({ phone: e.target.value })}
+                  />
+                </div>
+              </div>
+              <div className="form-row">
+                <div className="input-group full-width">
+                  <label htmlFor="website">Business Website (Optional)</label>
+                  <input
+                    id="website"
+                    type="url"
+                    title="Business Website (Optional)"
+                    placeholder="https://example.com"
+                    value={formData.website}
+                    onChange={e => update({ website: e.target.value })}
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="form-section">
+              <div className="section-header">Business Address</div>
+              <div className="input-group full-width">
+                <label htmlFor="addressStreet">Street Address</label>
+                <input id="addressStreet" placeholder="Enter street address" value={formData.addressStreet} onChange={e => update({ addressStreet: e.target.value })} />
+              </div>
+              <div className="form-row">
+                <div className="input-group"><label htmlFor="addressCity">City</label><input id="addressCity" placeholder="Enter city" title="City" value={formData.addressCity} onChange={e => update({ addressCity: e.target.value })} /></div>
+                <div className="input-group"><label htmlFor="addressProvince">Province</label><input id="addressProvince" placeholder="Enter province" title="Province" value={formData.addressProvince} onChange={e => update({ addressProvince: e.target.value })} /></div>
+                <div className="input-group"><label htmlFor="addressCode">Postal Code</label><input id="addressCode" placeholder="Enter postal code" title="Postal Code" value={formData.addressCode} onChange={e => update({ addressCode: e.target.value })} /></div>
+              </div>
+            </div>
+
+            <div className="nav-buttons">
+              <button className="btn" disabled>Back</button>
+              <button className="btn btn-next" onClick={next}>Next Step →</button>
+            </div>
+          </div>
+        )}
+
+        {/* ================= STEP 2: SECURITY ================= */}
+        {step === 2 && (
+          <div className="animate-in fade-in">
+            <div className="form-section">
+              <div className="section-header">Security Setup</div>
+              <div className="input-group full-width">
+                <label htmlFor="password">Password</label>
+                <input id="password" type="password" value={formData.password} onChange={e => update({ password: e.target.value })} />
+              </div>
+              <div className="input-group full-width">
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  title="Confirm Password"
+                  placeholder="Confirm your password"
+                  value={formData.confirmPassword}
+                  onChange={e => update({ confirmPassword: e.target.value })}
+                />
+              </div>
+              <div className="input-group full-width">
+                <label htmlFor="securityQuestion">Security Question</label>
+                <select id="securityQuestion" title="Security Question" value={formData.securityQuestion} onChange={e => update({ securityQuestion: e.target.value })} style={{ border: '2px solid #000', padding: '10px' }}>
+                  <option value="">SELECT A SECURITY QUESTION</option>
+                  <option value="pet">Name of first pet?</option>
+                  <option value="mother">Mother's maiden name?</option>
+                </select>
+              </div>
+              <div className="input-group full-width">
+                <label htmlFor="securityAnswer">Security Answer</label>
+                <input id="securityAnswer" title="Security Answer" placeholder="Enter your security answer" value={formData.securityAnswer} onChange={e => update({ securityAnswer: e.target.value })} />
+              </div>
+              <div className="input-group full-width" style={{ flexDirection: 'row', gap: '10px', alignItems: 'center' }}>
+                <label htmlFor="agreeTerms" style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.8rem', fontWeight: 'bold', textTransform: 'uppercase', cursor: 'pointer' }}>
+                  <input id="agreeTerms" type="checkbox" style={{ width: '20px' }} checked={formData.agreeTerms} onChange={e => update({ agreeTerms: e.target.checked })} aria-label="Agree to Terms and Conditions" />
+                  I Agree to T&Cs
+                </label>
+              </div>
+            </div>
+            
+            <div className="nav-buttons">
+              <button className="btn btn-prev" onClick={back}>← Back</button>
+              <button className="btn btn-next" onClick={next}>Next Step →</button>
+            </div>
+          </div>
+        )}
+
+        {/* ================= STEP 3: VERIFICATION ================= */}
+        {step === 3 && (
+          <div className="animate-in fade-in">
+            <div className="form-section">
+              <div className="section-header">Required Documents</div>
+              {['1. Business Registration Certificate', '2. Proof of Business Address', '3. Owner/Director ID Copy'].map((doc, i) => (
+                <div key={i} className="input-group full-width">
+                  <label>{doc}</label>
+                  <div className="upload-box">↑ UPLOAD DOCUMENT</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="form-section">
+              <div className="section-header">Email Verification</div>
+              <div className="input-group full-width">
+                <p style={{ fontSize: '0.9rem', marginBottom: '10px' }}>We sent a verification link to: <strong>{formData.email || 'your@email.com'}</strong></p>
+                <button style={{ textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', padding: 0 }}>Didn't receive it? Resend.</button>
+              </div>
+            </div>
+
+            <div className="nav-buttons">
+              <button className="btn btn-prev" onClick={back}>← Back</button>
+              <button className="btn btn-next" onClick={handleFinalSubmit}>
+                {loading ? "Submitting..." : "Submit for Review →"}
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* ================= STEP 4: COMPLETE ================= */}
+        {step === 4 && (
+          <div className="animate-in fade-in">
+            <div className="form-section" style={{ textAlign: 'center', padding: '60px 20px' }}>
+              <h2 style={{ fontSize: '2rem', fontWeight: 900, textTransform: 'uppercase', marginBottom: '20px' }}>Registration Complete</h2>
+              <p style={{ fontSize: '1rem', marginBottom: '40px' }}>Thanks for registering, {formData.businessName}</p>
+              
+              <div style={{ border: '2px solid #000', padding: '20px', textAlign: 'left', maxWidth: '500px', margin: '0 auto' }}>
+                <div className="section-header" style={{ border: 'none', padding: '0 0 10px 0' }}>What Happens Next:</div>
+                <ol style={{ paddingLeft: '20px', lineHeight: '1.6', fontSize: '0.9rem', fontWeight: 'bold' }}>
+                  <li>Our team will review your application (24-48 hours).</li>
+                  <li>You will receive an approval email.</li>
+                  <li>Log in to complete your profile setup.</li>
+                </ol>
+              </div>
+
+              <button onClick={() => router.push('/business/login')} className="btn" style={{ border: '2px solid #000', marginTop: '40px' }}>
+                Go to Login Page
+              </button>
+            </div>
+          </div>
+        )}
+
       </div>
-    </main>
+    </div>
   );
 }
